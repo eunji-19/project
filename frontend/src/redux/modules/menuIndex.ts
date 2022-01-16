@@ -11,12 +11,12 @@ export interface MenuIndexState {
 
 export type MenuIndexPayload = {
     index: string | "1";
-    title: string | 'bestSeller';
+    title: string | 'BestSeller';
 };
 
 const initialState: MenuIndexState = {
     index: "1",
-    title: "bestSeller"
+    title: "BestSeller"
 };
 
 export const menuIndexSlice = createSlice({

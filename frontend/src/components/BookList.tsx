@@ -2,10 +2,20 @@ import React from "react";
 import { List, Avatar } from "antd";
 import Icon from "@ant-design/icons";
 import { MenuIndexState } from "../redux/modules/menuIndex";
-import { useAppSelector } from "../redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
+import { BookState } from "../redux/modules/book";
 
-const BookList = () => {
-  const menuIndex: MenuIndexState = useAppSelector((state) => state.menuIndex);
+interface BookProps {
+  menuIndex: MenuIndexState;
+  bookState: BookState;
+}
+
+const BookList: React.FC<BookProps> = ({ menuIndex, bookState }) => {
+  // const menuIndex: MenuIndexState = useAppSelector((state) => state.menuIndex);
+  // const book: BookState = useAppSelector((state) => state.book);
+  // const dispatch = useAppDispatch();
+
+  console.log("book", bookState.books);
 
   const listData = [];
   for (let i = 0; i < 23; i++) {

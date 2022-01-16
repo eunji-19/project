@@ -2,7 +2,17 @@ import React from "react";
 import { Layout, Menu } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
-import { MenuIndexPayload, setMenuIndex } from "../redux/modules/menuIndex";
+import {
+  MenuIndexPayload,
+  MenuIndexState,
+  setMenuIndex,
+} from "../redux/modules/menuIndex";
+import { BookState } from "../redux/modules/book";
+import {
+  getBestBookStart,
+  getNewBookStart,
+  getRecommendBookStart,
+} from "../redux/actions/bookActions";
 
 const { Header } = Layout;
 
@@ -19,16 +29,17 @@ const NavHeader = () => {
 
   /**
    * MENU Index 설정
+   * BOOK 설정
    */
-  const menuIndex: string = useAppSelector((state) => state.menuIndex.index);
+  const menuIndex: MenuIndexState = useAppSelector((state) => state.menuIndex);
+
   const dispatch = useAppDispatch();
 
   /**
-   * Menu 클릭 시 해당 메뉴 페이지로 이동 및 index값 가져오기
+   * Menu 클릭 시 해당 메뉴 페이지로 이동 및 index값 가져오기 && Book List 가져오기
    */
   const onClickMenu = (item: any) => {
     const clickedMenu = menuItem.find((_item) => _item.key === item.key);
-
     navigate(clickedMenu!.path);
 
     const selectMenuIndexPayload: MenuIndexPayload = {
@@ -38,6 +49,7 @@ const NavHeader = () => {
 
     dispatch(setMenuIndex(selectMenuIndexPayload));
   };
+  console.log("menuIndex", menuIndex);
 
   return (
     <Layout>
@@ -57,7 +69,7 @@ const NavHeader = () => {
           theme="light"
           mode="horizontal"
           style={{ lineHeight: "64px" }}
-          selectedKeys={[menuIndex]}
+          selectedKeys={[menuIndex.index]}
           onClick={onClickMenu}
         >
           {menuItem.map((item) => (
