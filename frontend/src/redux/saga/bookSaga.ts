@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from "axios";
-import {put, call, takeEvery, take} from 'redux-saga/effects';
+import {put, call, takeEvery} from 'redux-saga/effects';
 import {APP_URL} from "../../configure";
 import { getBestBookError, GET_BEST_BOOK_START, getBestBookSuccess, getRecommendBookSuccess, getRecommendBookError, getNewBookSuccess, getNewBookError, GET_RECOMMEND_BOOK_START, GET_NEW_BOOK_START} from "../actions/bookActions";
 

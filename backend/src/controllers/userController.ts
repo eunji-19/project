@@ -51,7 +51,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     );
     const generateClientToken = await generateClientTokenFetch.json();
 
-    console.log("----generate Brain Client Token----", generateClientToken);
+    // console.log("----generate Brain Client Token----", generateClientToken);
 
     if (generateClientToken.succeed == false) {
       res.status(500).json({ statusMessage: "ClientToken 실패" });

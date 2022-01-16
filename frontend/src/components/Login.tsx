@@ -2,6 +2,13 @@ import React, { useRef } from "react";
 import { Button, Input, Form } from "antd";
 import styles from "../css/Login.module.css";
 import { LoginReqType } from "../types";
+import { AuthSignupState, getSignupSuccess } from "../redux/modules/auth";
+import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
+import {
+  authSignupStart,
+  authSignupSuccess,
+} from "../redux/actions/authActions";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const emailRef = useRef<Input>(null);
@@ -10,12 +17,20 @@ const Login = () => {
   // antd form control
   const [form] = Form.useForm();
 
+  const authSignup: AuthSignupState = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  console.log("authSignup", authSignup);
+  const navigate = useNavigate();
+
   // submit 할때 Form
   const onSubmitForm = () => {
     const email = emailRef.current!.state.value;
     const password = passwordRef.current!.state.value;
 
     console.log("email, password", email, password);
+    dispatch(getSignupSuccess({ nickname: "12", email, password }));
+    navigate("/");
   };
 
   return (
