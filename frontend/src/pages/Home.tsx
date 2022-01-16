@@ -1,11 +1,8 @@
 import React from "react";
+import BookListContainer from "../containers/BookListcontainer";
 
 const Home = () => {
-  return (
-    <div>
-      <h3>Home</h3>
-    </div>
-  );
+  return <BookListContainer />;
 };
 
 export default Home;
