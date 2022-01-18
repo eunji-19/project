@@ -1,11 +1,8 @@
 import React from "react";
+import BookDetailContainer from "../containers/BookDetailContainer";
 
 const BookDetail = () => {
-  return (
-    <div>
-      <h3>BookDetail</h3>
-    </div>
-  );
+  return <BookDetailContainer />;
 };
 
 export default BookDetail;

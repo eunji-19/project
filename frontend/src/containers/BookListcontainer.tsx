@@ -1,22 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import BookList from "../components/BookList";
-import {
-  getBestBookStart,
-  getNewBookStart,
-  getRecommendBookStart,
-} from "../redux/actions/bookActions";
-import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
-import { AuthSignupState } from "../redux/modules/auth";
+import { useAppSelector } from "../redux/hooks/hooks";
 import { BookState } from "../redux/modules/book";
 import { MenuIndexState } from "../redux/modules/menuIndex";
+
 const BookListContainer = () => {
   const menuIndex: MenuIndexState = useAppSelector((state) => state.menuIndex);
+  const book: BookState = useAppSelector((state) => state.book);
 
-  const bookState: BookState = useAppSelector((state) => state.book);
-  const authState: AuthSignupState = useAppSelector((state) => state.auth);
-
-  console.log("!!!!!!", authState);
-  return <BookList bookState={bookState} menuIndex={menuIndex} />;
+  return <BookList book={book} menuIndex={menuIndex} />;
 };
 
 export default BookListContainer;

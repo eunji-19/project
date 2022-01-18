@@ -29,10 +29,8 @@ const NavHeader = () => {
 
   /**
    * MENU Index 설정
-   * BOOK 설정
    */
   const menuIndex: MenuIndexState = useAppSelector((state) => state.menuIndex);
-
   const dispatch = useAppDispatch();
 
   /**
@@ -40,7 +38,6 @@ const NavHeader = () => {
    */
   const onClickMenu = (item: any) => {
     const clickedMenu = menuItem.find((_item) => _item.key === item.key);
-    navigate(clickedMenu!.path);
 
     const selectMenuIndexPayload: MenuIndexPayload = {
       index: clickedMenu!.key,
@@ -48,8 +45,11 @@ const NavHeader = () => {
     };
 
     dispatch(setMenuIndex(selectMenuIndexPayload));
+    /**
+     * 선택한 곳으로 이동
+     */
+    navigate(clickedMenu!.path);
   };
-  console.log("menuIndex", menuIndex);
 
   return (
     <Layout>

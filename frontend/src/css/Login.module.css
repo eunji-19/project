@@ -91,11 +91,20 @@ body {
   width: 100%;
 }
 
-.email_title {
+.nickname_title {
   font-family: Roboto;
   font-size: 12px;
   font-weight: bold;
   margin-top: 40px;
+  text-align: left;
+  padding-left: 40px;
+}
+
+.email_title {
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 10pxs;
   text-align: left;
   padding-left: 40px;
 }

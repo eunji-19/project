@@ -1,26 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { List, Avatar } from "antd";
 import Icon from "@ant-design/icons";
 import { MenuIndexState } from "../redux/modules/menuIndex";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import { BookState } from "../redux/modules/book";
+import { Book } from "../models/Book";
+import {
+  getBestBookStart,
+  getNewBookStart,
+  getRecommendBookStart,
+} from "../redux/actions/bookActions";
 
 interface BookProps {
   menuIndex: MenuIndexState;
-  bookState: BookState;
+  book: BookState;
 }
 
-const BookList: React.FC<BookProps> = ({ menuIndex, bookState }) => {
-  // const menuIndex: MenuIndexState = useAppSelector((state) => state.menuIndex);
-  // const book: BookState = useAppSelector((state) => state.book);
-  // const dispatch = useAppDispatch();
+const BookList: React.FC<BookProps> = ({ menuIndex, book }) => {
+  // const [bookItme, setBookItem] = useState(null);
+  const dispatch = useAppDispatch();
+  const listData: any[] | null = [];
 
-  console.log("book", bookState.books);
+  // const getBookItem = (title: string) => {
+  //   if (title === "New") {
+  //     console.log("New");
+  //     dispatch(getNewBookStart());
+  //     console.log("book New ", book);
+  //   } else if (title === "Recommend") {
+  //     console.log("Recommend");
+  //     dispatch(getRecommendBookStart());
+  //     console.log("book Recommend ", book);
+  //   } else {
+  //     console.log("else");
+  //     dispatch(getBestBookStart());
+  //     console.log("book else ", book);
+  //   }
+  // };
 
-  const listData = [];
+  // useEffect(() => {
+  //   console.log("First Loading ");
+  //   dispatch(getBestBookStart());
+  //   console.log("book ", book);
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   getBookItem(menuIndex.title);
+  // }, [dispatch, menuIndex.title]);
+
   for (let i = 0; i < 23; i++) {
     listData.push({
-      href: "http://ant.design",
+      // href: "http://ant.design",
+      href: "book/1",
       title: `ant design part ${i}`,
       avatar:
         "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
@@ -61,6 +91,7 @@ const BookList: React.FC<BookProps> = ({ menuIndex, bookState }) => {
             <List.Item.Meta
               avatar={<Avatar src={item.avatar} />}
               title={<a href={item.href}>{item.title}</a>}
+              // title={<a href={item.href}>{item.title}</a>}
               description={item.description}
             />
             {item.content}

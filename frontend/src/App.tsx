@@ -4,7 +4,7 @@ import BookDetail from "./pages/BookDetail";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
-import Register from "./pages/Register";
+import Signup from "./pages/Signup";
 import Error from "./pages/Error";
 import Header from "./pages/Header";
 import Footer from "./pages/Footer";
@@ -19,7 +19,7 @@ function App() {
           <Route path="/recommend" element={<Home />} />
           <Route path="/new" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/book/:id" element={<BookDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
