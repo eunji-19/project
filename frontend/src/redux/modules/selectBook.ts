@@ -9,8 +9,8 @@ export interface SelectBookState {
   author: string | null;
   description: string | null;
   price: number | null;
-  smallImageUrl: string | null;
-  largeImageUrl: string | null;
+  smallImageUrl: string;
+  largeImageUrl: string;
   categoryName: string | null;
 }
 
@@ -19,8 +19,8 @@ export type SelectBookPayload = {
   author: string | null;
   description: string | null;
   price: number | null;
-  smallImageUrl: string | null;
-  largeImageUrl: string | null;
+  smallImageUrl: string;
+  largeImageUrl: string;
   categoryName: string | null;
 };
 
@@ -29,8 +29,8 @@ const initialState: SelectBookState = {
   author: null,
   description: null,
   price: null,
-  smallImageUrl: null,
-  largeImageUrl: null,
+  smallImageUrl: "",
+  largeImageUrl: "",
   categoryName: null,
 };
 
@@ -55,5 +55,4 @@ export const selectBookSlice = createSlice({
 
 export const { setSelectBook } = selectBookSlice.actions;
 export const getSelectBook = (state: RootState) => state.selectBook;
-
 export default selectBookSlice.reducer;
