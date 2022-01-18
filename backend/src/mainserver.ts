@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import { MongoConnector } from "./mongo-connector";
 import cookieParser from "cookie-parser";
 
-import { authRouter, bookRouter } from "./routes";
+import { authRouter, bookRouter, deepbrainRouter } from "./routes";
 
 export class MainServer {
   private app: any;
@@ -30,7 +30,8 @@ export class MainServer {
      */
     this.app.use("/api/auth", authRouter);
     this.app.use("/api/book", bookRouter);
-
+    this.app.use("/api/deepbrain", deepbrainRouter);
+      
     /**
      * Server 연결
      */
