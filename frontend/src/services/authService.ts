@@ -13,6 +13,15 @@ export default class AuthService {
     await axios.get(`${APP_URL}/auth/logout`);
   }
 
+  // public static async login(reqData: LoginReqType) {
+  //   const result = await axios
+  //     .post(`${APP_URL}/auth/login`, reqData)
+  //     .catch((err: AxiosError) => {
+  //       return Promise.reject(err.response);
+  //     });
+  //   return result;
+  // }
+
   public static async signUp(reqData: SignupReqType) {
     const result = await axios
       .post(`${APP_URL}/auth/signup`, reqData)

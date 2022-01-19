@@ -1,14 +1,11 @@
 import React, { useRef } from "react";
-import { Button, Input, Form } from "antd";
+import { Button, Input, Form, Alert, message } from "antd";
 import styles from "../css/Login.module.css";
 import { LoginReqType } from "../types";
-import { AuthSignupState, getSignupSuccess } from "../redux/modules/auth";
+import { AuthLoginState } from "../redux/modules/auth";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
-import {
-  authSignupStart,
-  authSignupSuccess,
-} from "../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
+import AuthService from "../services/authService";
 
 const Login = () => {
   const emailRef = useRef<Input>(null);
@@ -17,20 +14,36 @@ const Login = () => {
   // antd form control
   const [form] = Form.useForm();
 
-  const authSignup: AuthSignupState = useAppSelector((state) => state.auth);
+  const loginState: AuthLoginState = useAppSelector((state) => state.login);
   const dispatch = useAppDispatch();
 
-  console.log("authSignup", authSignup);
   const navigate = useNavigate();
 
   // submit 할때 Form
-  const onSubmitForm = () => {
+  const onSubmitForm = async () => {
     const email = emailRef.current!.state.value;
     const password = passwordRef.current!.state.value;
 
     console.log("email, password", email, password);
-    dispatch(getSignupSuccess({ nickname: "12", email, password }));
-    navigate("/");
+    await checkLogin(email, password)
+      .then((result) => {
+        console.log("result ", result);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log("login ", loginState);
+        // alert(err.data.statusMessage);
+        if (err.data.statusMessage === "회원정보가 없습니다") {
+          message.error(err.data.statusMessage);
+          // navigate("/signup");
+        }
+      });
+    // navigate("/");
+  };
+
+  const checkLogin = async (email: string, password: string) => {
+    const response = await AuthService.login({ email, password });
+    return response;
   };
 
   return (
