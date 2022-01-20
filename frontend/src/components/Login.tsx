@@ -1,50 +1,60 @@
-import React, { useRef } from "react";
-import { Button, Input, Form, Alert, message } from "antd";
+import React, { useRef, useState } from "react";
+import { Button, Input, Form, Spin, message } from "antd";
 import styles from "../css/Login.module.css";
-import { LoginReqType } from "../types";
-import { AuthLoginState } from "../redux/modules/auth";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
-import { useNavigate } from "react-router-dom";
-import AuthService from "../services/authService";
+import { useNavigate, Navigate } from "react-router-dom";
+import { login } from "../redux/actions/authActions";
 
 const Login = () => {
   const emailRef = useRef<Input>(null);
+  // const emailRef = useRef();
   const passwordRef = useRef<Input>(null);
 
   // antd form control
   const [form] = Form.useForm();
 
-  const loginState: AuthLoginState = useAppSelector((state) => state.login);
+  const navigate = useNavigate();
+
+  const { isLoggedIn } = useAppSelector((state) => state.auth);
+  const { axiosMessage } = useAppSelector((state) => state.message);
   const dispatch = useAppDispatch();
 
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   // submit 할때 Form
   const onSubmitForm = async () => {
+    // event.preventDefault();
+
     const email = emailRef.current!.state.value;
     const password = passwordRef.current!.state.value;
 
-    console.log("email, password", email, password);
-    await checkLogin(email, password)
-      .then((result) => {
-        console.log("result ", result);
+    setLoading(true);
+
+    dispatch(login({ email, password }))
+      .then(() => {
         navigate("/");
       })
-      .catch((err) => {
-        console.log("login ", loginState);
-        // alert(err.data.statusMessage);
-        if (err.data.statusMessage === "회원정보가 없습니다") {
-          message.error(err.data.statusMessage);
-          // navigate("/signup");
-        }
+      .catch(() => {
+        setLoading(false);
       });
-    // navigate("/");
+
+    setLoading(false);
+    console.log("Login ", axiosMessage.status);
+
+    // if (axiosMessage) {
+    //   if (axiosMessage.data.statusMessage.includes("회원정보")) {
+    //     message
+    //       .error(axiosMessage.data.statusMessage)
+    //       .then(() => navigate("/signup"));
+    //   } else {
+    //     message.error(axiosMessage.data.statusMessage);
+    //   }
+    // }
   };
 
-  const checkLogin = async (email: string, password: string) => {
-    const response = await AuthService.login({ email, password });
-    return response;
-  };
+  if (isLoggedIn) {
+    return <Navigate replace to="/" />;
+  }
 
   return (
     <div className={styles.login_page}>
@@ -118,7 +128,7 @@ const Login = () => {
               className={styles.login_form_button}
               size="large"
             >
-              Login
+              {loading ? <Spin tip="Loading..."></Spin> : "로그인"}
             </Button>
           </div>
         </Form>

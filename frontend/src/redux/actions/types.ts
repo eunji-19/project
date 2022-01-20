@@ -1,0 +1,15 @@
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAIL = "REGISTER_FAIL";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+export const LOGOUT = "LOGOUT";
+
+export const SET_MESSAGE = "SET_MESSAGE";
+export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
+
+export const BESTSELLER_SUCCESS = "BESTSELLER_SUCCESS";
+export const BESTSELLER_FAIL = "BESTSELLER_FAIL";
+export const RECOMMEND_SUCCESS = "RECOMMEND_SUCCESS";
+export const RECOMMEND_FAIL = "RECOMMEND_FAIL";
+export const NEW_SUCCESS = "NEW_SUCCESS";
+export const NEW_FAIL = "NEW_FAIL";

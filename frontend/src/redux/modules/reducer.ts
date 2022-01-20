@@ -1,17 +1,16 @@
 import { combineReducers } from "redux";
 import { all } from "redux-saga/effects";
-import { getAuthSaga } from "../saga/authSaga";
-import { getBookSaga } from "../saga/bookSaga";
-import { auth, login } from "./auth";
+import auth from "./auth";
 import book from "./book";
 import menuIndex from "./menuIndex";
+import message from "./message";
 import selectBook from "./selectBook";
 
-const reducer = combineReducers({ auth, menuIndex, book, selectBook, login });
+const reducer = combineReducers({ menuIndex, book, selectBook, auth, message });
 
-export function* rootSaga() {
-  yield all([getBookSaga(), getAuthSaga()]);
-}
+// export function* rootSaga() {
+//   yield all([getBookSaga(), getAuthSaga()]);
+// }
 
 export type RootReducerType = ReturnType<typeof reducer>;
 

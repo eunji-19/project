@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
-import { Button, Input, Form } from "antd";
+import { Button, Input, Form, message } from "antd";
 import styles from "../css/Login.module.css";
 import { useNavigate } from "react-router-dom";
-import AuthService from "../services/authService";
+import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
+import { signUp } from "../redux/actions/authActions";
 
 const Signup = () => {
   const nicknameRef = useRef<Input>(null);
@@ -13,6 +14,9 @@ const Signup = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
+  const { axiosMessage } = useAppSelector((state) => state.message);
+  const dispatch = useAppDispatch();
+
   // submit 할때 Form
   const onSubmitForm = async () => {
     const nickname = nicknameRef.current!.state.value;
@@ -20,25 +24,16 @@ const Signup = () => {
     const password = passwordRef.current!.state.value;
 
     console.log("nickname, email, password ", nickname, email, password);
-    await checkSignUp(nickname, email, password)
-      .then((result) => {
-        console.log("result ", result);
-        alert("회원가입을 진심으로 축하드립니다!");
+
+    dispatch(signUp({ nickname, email, password }))
+      .then(() => {
         navigate("/login");
       })
-      .catch((err) => {
-        alert(err.data.statusMessage);
-      });
-    // navigate("/");
-  };
-
-  const checkSignUp = async (
-    nickname: string,
-    email: string,
-    password: string
-  ) => {
-    const response = await AuthService.signUp({ nickname, email, password });
-    return response;
+      .catch(() => {});
+    console.log("FAil.. ", axiosMessage);
+    if (axiosMessage.status === 400) {
+      message.error(axiosMessage.message.data.statusMessage);
+    }
   };
 
   return (

@@ -6,11 +6,6 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import { BookState } from "../redux/modules/book";
 import { BookItem } from "../models/Book";
 import {
-  getBestBookStart,
-  getNewBookStart,
-  getRecommendBookStart,
-} from "../redux/actions/bookActions";
-import {
   SelectBookPayload,
   SelectBookState,
   setSelectBook,
