@@ -297,6 +297,7 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
     const existUser = await userService.findUserByEmail(email);
     if (existUser) {
       res.status(400).json({ statusMessage: "이미있는 사용자입니다." });
+      return;
       //   throw new Error("이미 있는 사용자입니다.");
     }
 

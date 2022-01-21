@@ -71,6 +71,11 @@ export const login =
           payload: { user: data },
         });
 
+        dispatch({
+          type: SET_MESSAGE,
+          payload: data,
+        });
+
         return Promise.resolve();
       },
       (error) => {

@@ -1,24 +1,53 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BookListNew from "../components/BokListNew";
 import BookList from "../components/BookList";
-import { useAppSelector } from "../redux/hooks/hooks";
+import {
+  getBestSeller,
+  getNewSeller,
+  getRecommendSeller,
+} from "../redux/actions/bookActions";
+import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import { BookState } from "../redux/modules/book";
 import { MenuIndexState } from "../redux/modules/menuIndex";
-
-// const BookListContainer = () => {
-//   const menuIndex: MenuIndexState = useAppSelector((state) => state.menuIndex);
-//   const book: BookState = useAppSelector((state) => state.book);
-
-//   return <BookList book={book} menuIndex={menuIndex} />;
-// };
-
-// export default BookListContainer;
+import { Spin, Space } from "antd";
 
 const BookListContainer = () => {
-  const menuIndex: MenuIndexState = useAppSelector((state) => state.menuIndex);
-  const book: BookState = useAppSelector((state) => state.book);
+  const { title }: MenuIndexState = useAppSelector((state) => state.menuIndex);
+  const bookState: BookState = useAppSelector((state) => state.book);
+  const dispatch = useAppDispatch();
 
-  return <BookListNew />;
+  const fetchBookItem = () => {
+    dispatch(getBestSeller());
+  };
+
+  useEffect(() => {
+    fetchBookItem();
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   fetchBookItem();
+  // }, [dispatch]);
+
+  return (
+    <div>
+      {bookState.isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <Space size="middle">
+            <Spin size="large" />
+          </Space>
+        </div>
+      ) : (
+        <BookListNew book={bookState} />
+      )}
+    </div>
+  );
 };
 
 export default BookListContainer;

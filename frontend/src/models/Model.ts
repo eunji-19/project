@@ -1,12 +1,16 @@
-export interface ModelList {
+export interface Model {
+  statusMessage: StatusMessage;
+}
+
+export interface StatusMessage {
   succeed: boolean;
-  models: Model[];
+  models: ModelElement[];
   error?: string;
   errorCode?: number;
   description?: string;
 }
 
-export interface Model {
+export interface ModelElement {
   id: string;
   label: Expertise;
   expertise: Expertise;

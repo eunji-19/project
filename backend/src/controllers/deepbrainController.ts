@@ -39,11 +39,15 @@ const getModelList = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { appId, platform, isClientToken, token, uuid, sdk_v, clientHostname } =
-    req.body;
-
+  const { token } = req.body;
   try {
-    console.log("----getModelList Start-----");
+    console.log("----get modelList start----");
+    const result = await deepbrainService.getModelList(token);
+    if (!result.succeed) {
+      res.status(400).json({ statusMessage: result });
+      return;
+    }
+    res.status(200).json({ statusMessage: result });
   } catch (err) {
     next(err);
   }

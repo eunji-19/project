@@ -33,7 +33,7 @@ export interface BookState {
 // });
 const initialState: BookState = {
   books: null,
-  isLoading: false,
+  isLoading: true,
 };
 
 export default function book(

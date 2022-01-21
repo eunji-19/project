@@ -15,6 +15,7 @@ export const getBestSeller = () => async (dispatch: any) => {
     (response) => {
       dispatch({
         type: BESTSELLER_SUCCESS,
+        payload: { books: response },
       });
 
       dispatch({
@@ -48,11 +49,12 @@ export const getRecommendSeller = () => async (dispatch: any) => {
     (response) => {
       dispatch({
         type: RECOMMEND_SUCCESS,
+        payload: { books: response },
       });
 
       dispatch({
         type: SET_MESSAGE,
-        payload: response.data,
+        payload: response,
       });
 
       return Promise.resolve();
@@ -81,11 +83,12 @@ export const getNewSeller = () => async (dispatch: any) => {
     (response) => {
       dispatch({
         type: NEW_SUCCESS,
+        payload: { books: response },
       });
 
       dispatch({
         type: SET_MESSAGE,
-        payload: response.data,
+        payload: response,
       });
 
       return Promise.resolve();
