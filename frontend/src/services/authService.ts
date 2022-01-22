@@ -19,6 +19,9 @@ export default class AuthService {
   }
 
   public static async logout(): Promise<void> {
-    await axios.get(`${APP_URL}/auth/logout`);
+    return await axios.get(`${APP_URL}/auth/logout`).then((response) => {
+      localStorage.removeItem("user");
+      return response.data;
+    });
   }
 }

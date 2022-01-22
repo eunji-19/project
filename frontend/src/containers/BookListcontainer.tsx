@@ -22,11 +22,8 @@ const BookListContainer = () => {
 
   useEffect(() => {
     fetchBookItem();
-  }, [dispatch]);
-
-  // useEffect(() => {
-  //   fetchBookItem();
-  // }, [dispatch]);
+    // console.log("tile ", title);
+  }, [title]);
 
   return (
     <div>
@@ -44,6 +41,7 @@ const BookListContainer = () => {
           </Space>
         </div>
       ) : (
+        // <div>ok</div>
         <BookListNew book={bookState} />
       )}
     </div>
