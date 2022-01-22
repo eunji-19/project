@@ -42,4 +42,16 @@ router.get("/new", async (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
+/**
+ * 좋아하는 책 담기 
+ */
+router.post("/like", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await bookController.getLikeBook(req, res, next);
+    return result;
+  } catch (err) {
+    res.status(400).json({ statusMessage: err.message })
+  }
+});
+
 export = router;

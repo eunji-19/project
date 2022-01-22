@@ -47,10 +47,40 @@ const getModelList = async (
       res.status(400).json({ statusMessage: result });
       return;
     }
-    res.status(200).json({ statusMessage: result });
+    return res.status(200).json({ statusMessage: result });
   } catch (err) {
     next(err);
   }
 };
 
-export default { generateClientToken, generateToken, getModelList };
+/**
+ * Make Video
+ */
+const makeVideoKey = async (req: Request, res: Response, next: NextFunction) => {
+  const { language, text, model, clothes, token } = req.body;
+  try {
+    const result = await deepbrainService.makeVideoKey(language, text, model, clothes, token);
+    if (result.succeed) {
+      res.status(400).json({ statusMessage: result });
+      return;
+    }
+    return res.status(200).json({ statusMessage: result });
+  } catch (err) {
+    next(err);
+  }
+}
+
+/**
+ * Make Real Video
+ */
+const makeVideo = async (req: Request, res: Response, next: NextFunction) => {
+  const { key, token } = req.body;
+  try {
+    const result = await deepbrainService.makeVideo(key, token);
+    return res.status(200).json({ statusMessage: result });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export default { generateClientToken, generateToken, getModelList, makeVideoKey, makeVideo };

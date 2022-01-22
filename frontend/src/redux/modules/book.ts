@@ -1,10 +1,11 @@
 import { AnyAction } from "@reduxjs/toolkit";
-import axios from "axios";
-import { APP_URL } from "../../configure";
-import { Book } from "../../models/Book";
+import { AxiosError } from "axios";
+import { Book, LikeBook } from "../../models/Book";
 import {
   BESTSELLER_FAIL,
   BESTSELLER_SUCCESS,
+  LIKEBOOK_FAIL,
+  LIKEBOOK_SUCCESS,
   NEW_FAIL,
   NEW_SUCCESS,
   RECOMMEND_FAIL,
@@ -16,27 +17,12 @@ export interface BookState {
   isLoading: boolean;
 }
 
-// function getInitBookData() {
-//   return new Promise((resolve, reject) => {
-//     axios
-//       .get(`${APP_URL}/book/best`)
-//       .then((res) => resolve(res.data))
-//       .catch((err) => reject(err));
-//   });
-// }
-
-// getInitBookData().then((response: any) => {
-//   initialState = {
-//     books: response.statusMessage,
-//     isLoading: false,
-//   };
-// });
 const initialState: BookState = {
   books: null,
   isLoading: true,
 };
 
-export default function book(
+export function book(
   state: BookState = initialState,
   action: AnyAction
 ) {
@@ -67,6 +53,49 @@ export default function book(
       };
     case NEW_FAIL:
       return { ...state, isLoading: false };
+    default:
+      return state;
+  }
+}
+
+/**
+ * 좋아하는 책 선택 
+ */
+
+export interface LikeBookState {
+  likeBook: LikeBook | null;
+  isLoading: boolean;
+  error: AxiosError | null;
+}
+
+const likeInitialState: LikeBookState = {
+  likeBook: null,
+  isLoading: true,
+  error: null,
+};
+
+export function likeBook(
+  state: LikeBookState = likeInitialState,
+  action: AnyAction
+) {
+  const { type, payload } = action;
+  
+  switch (type) {
+    case LIKEBOOK_SUCCESS: 
+      return {
+        ...state,
+        likeBook: payload.likeBook,
+        isLoading: false,
+        error: null,
+      };
+    case LIKEBOOK_FAIL: 
+      console.log("FAIL ", payload);
+      return {
+        ...state,
+        isLoading: false,
+        likeBook: null,
+        error: payload.likeBook,
+      };
     default:
       return state;
   }

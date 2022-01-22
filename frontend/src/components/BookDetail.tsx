@@ -4,10 +4,14 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import { SelectBookState } from "../redux/modules/selectBook";
 import styles from "../css/BookDetail.module.css";
 import { message, Space, Spin } from "antd";
-import { PlayCircleOutlined, CaretDownOutlined } from "@ant-design/icons";
-import { getModelList } from "../redux/actions/brainActions";
 import { ModelElement } from "../models/Model";
-import { Card, Button, ListGroup } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
+import { LikeBookState } from "../redux/modules/book";
+import { getModelList } from "../redux/actions/brainActions";
+import { LikeBookReqType } from "../types";
+import { setLikeBook } from "../redux/actions/bookActions";
+import axios from "axios";
+import { clearMessage, setMessage } from "../redux/actions/messageActions";
 
 const BookDetail = () => {
   const { id } = useParams();
@@ -33,6 +37,12 @@ const BookDetail = () => {
    */
   const [isAudio, setIsAudio] = useState(false);
 
+  /**
+   * 좋아하는 책
+   */
+  const likeBook: LikeBookState = useAppSelector((state) => state.likeBook);
+  const { axiosMessage } = useAppSelector((state) => state.message);
+
   useEffect(() => {
     checkLogin();
     console.log("!user! ", user);
@@ -41,6 +51,7 @@ const BookDetail = () => {
   const checkLogin = () => {
     if (user) {
       generateToken = user.statusMessage.user.generate_token;
+      console.log("token ", generateToken);
       dispatch(getModelList(generateToken));
     }
   };
@@ -105,7 +116,33 @@ const BookDetail = () => {
                 오디오북 듣기
               </Button>
               <div style={{ marginLeft: "10px" }}></div>
-              <Button variant="outline-dark">Add to cart</Button>
+              <Button
+                variant="outline-dark"
+                onClick={() => {
+                  if (!isLoggedIn) {
+                    message
+                      .info("로그인 후 사용가능")
+                      .then(() => navigate("/login"));
+                    setIsAudio(false);
+                  } else {
+                    const email: string = user.statusMessage.user.email;
+                    const reqType: LikeBookReqType = {
+                      email: email,
+                      title: selectBookState.title!,
+                      author: selectBookState.author!,
+                      smallImageUrl: selectBookState.smallImageUrl,
+                    };
+                    console.log("req type ", reqType);
+                    dispatch(setLikeBook(reqType));
+                    if (likeBook.error) {
+                      console.log("error! ", likeBook.error);
+                      alert("삭제?");
+                    }
+                  }
+                }}
+              >
+                책 담기
+              </Button>
             </div>
           </div>
         </div>

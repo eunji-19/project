@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { LikeBookModel, LikeBook } from "../models/likeBook";
 
 /**
  * 검색을 위한 공통 Query
@@ -66,4 +67,30 @@ const getBookResult = async (category: string, subUrl: string) => {
   return resultMap;
 };
 
-export default { getBookResult };
+/**
+ * 좋아하는 책인지 확인 
+ */
+const findLikeBook = async (email: string, title: string) => {
+  const findBook = await LikeBookModel.findOne({ title: title, email: email });
+  console.log("findLikeBok ", findBook);
+  return findBook;
+}
+
+/**
+ * 좋아하는 책에서 삭제!
+ */
+const deleteLikeBook = async (existingLikeBook: any) => {
+  const deleteBook = await LikeBookModel.findByIdAndDelete(existingLikeBook);
+  console.log('deleteBook ', deleteBook);
+  return deleteBook;
+}
+
+/**
+ * 좋아하는 책 생성
+ */
+const setLikeBook = async (email: string, title: string, author: string, smallImageUrl: string) => {
+  const likeBook = new LikeBookModel({ email, title, author, smallImageUrl });
+  return await likeBook.save();
+}
+
+export default { getBookResult, findLikeBook, deleteLikeBook, setLikeBook };

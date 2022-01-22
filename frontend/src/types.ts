@@ -8,3 +8,10 @@ export type SignupReqType = {
   email: string;
   password: string;
 }
+
+export type LikeBookReqType = {
+  email: string;
+  title: string;
+  author: string;
+  smallImageUrl: string;
+}

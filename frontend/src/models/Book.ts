@@ -64,3 +64,14 @@ export enum BookSaleStatus {
   예약판매 = "예약판매",
   판매중 = "판매중",
 }
+
+/**
+ * 좋아하는 책 
+ * email: string, title: string, author: string, smallImageUrl: string
+ */
+export interface LikeBook {
+  email: string;
+  title: string;
+  author: string;
+  smallImageUrl: string;
+}

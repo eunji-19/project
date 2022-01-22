@@ -7,7 +7,7 @@ export interface MessageState {
 
 const initialState: MessageState = { axiosMessage: "" };
 
-export default function message(state = initialState, action: AnyAction) {
+export default function reducerMessage(state = initialState, action: AnyAction) {
   const { type, payload } = action;
 
   switch (type) {

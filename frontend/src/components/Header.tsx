@@ -23,7 +23,7 @@ const NavHeader = () => {
   /**
    * Login 설정
    */
-  const { isLoggedIn } = useAppSelector((state) => state.auth);
+  const { isLoggedIn, user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
   // useEffect(() => {
@@ -65,6 +65,7 @@ const NavHeader = () => {
           </Nav>
           {isLoggedIn ? (
             <Nav>
+              <Nav.Link>Hi, {user.statusMessage.user.nickname}😍</Nav.Link>
               <Nav.Link onClick={onClickLogout}>Logout</Nav.Link>
             </Nav>
           ) : (

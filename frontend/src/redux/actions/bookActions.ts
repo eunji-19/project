@@ -1,8 +1,11 @@
 import axios from "axios";
 import BookService from "../../services/bookService";
+import { LikeBookReqType } from "../../types";
 import {
   BESTSELLER_FAIL,
   BESTSELLER_SUCCESS,
+  LIKEBOOK_FAIL,
+  LIKEBOOK_SUCCESS,
   NEW_FAIL,
   NEW_SUCCESS,
   RECOMMEND_FAIL,
@@ -112,69 +115,40 @@ export const getNewSeller = () => async (dispatch: any) => {
   );
 };
 
-// import { Book } from "../../models/Book";
+export const setLikeBook = (reqData: LikeBookReqType) => async (dispatch: any) => {
+  return BookService.setLikeBook(reqData).then((response) => {
+    console.log("Action ", response);
+    dispatch({
+      type: LIKEBOOK_SUCCESS,
+      payload: { likeBook: response },
+    });
 
-// /**
-//  * BestSeller
-//  */
-// export const GET_BEST_BOOK_START = "best/GET_BEST_BOOK_START" as const;
-// export const GET_BEST_BOOK_SUCCESS = "best/GET_BEST_BOOK_SUCCESS" as const;
-// export const GET_BEST_BOOK_ERROR = "best/GET_BEST_BOOK_ERROR" as const;
+    dispatch({
+      type: SET_MESSAGE,
+      payload: response,
+    });
 
-// export const getBestBookStart = () => ({ type: GET_BEST_BOOK_START });
-// export const getBestBookSuccess = (books: Book) => ({
-//   type: GET_BEST_BOOK_SUCCESS,
-//   payload: books,
-// });
-// export const getBestBookError = (error: Error) => ({
-//   type: GET_BEST_BOOK_ERROR,
-//   payload: error,
-// });
+    return Promise.resolve();
+  },
+    (error) => {
+      if (axios.isAxiosError(error)) {
+        const message = error.response;
+        const status = error.response?.status;
+        const result = { message, status };
+        
+        console.log("error ", result);
 
-// /**
-//  * Recommend
-//  */
-// export const GET_RECOMMEND_BOOK_START =
-//   "recommend/GET_RECOMMEND_BOOK_START" as const;
-// export const GET_RECOMMEND_BOOK_SUCCESS =
-//   "recommend/GET_RECOMMEND_BOOK_SUCCESS" as const;
-// export const GET_RECOMMEND_BOOK_ERROR =
-//   "recommend/GET_RECOMMEND_BOOK_ERROR" as const;
+        dispatch({
+          type: LIKEBOOK_FAIL,
+          payload: {likeBook: result}
+        });
 
-// export const getRecommendBookStart = () => ({ type: GET_RECOMMEND_BOOK_START });
-// export const getRecommendBookSuccess = (books: Book) => ({
-//   type: GET_RECOMMEND_BOOK_SUCCESS,
-//   payload: books,
-// });
-// export const getRecommendBookError = (error: Error) => ({
-//   type: GET_RECOMMEND_BOOK_ERROR,
-//   payload: error,
-// });
-
-// /**
-//  * NEW
-//  */
-// export const GET_NEW_BOOK_START = "new/GET_NEW_BOOK_START" as const;
-// export const GET_NEW_BOOK_SUCCESS = "new/GET_NEW_BOOK_SUCCESS" as const;
-// export const GET_NEW_BOOK_ERROR = "new/GET_NEW_BOOK_ERROR" as const;
-
-// export const getNewBookStart = () => ({ type: GET_NEW_BOOK_START });
-// export const getNewBookSuccess = (books: Book) => ({
-//   type: GET_NEW_BOOK_SUCCESS,
-//   payload: books,
-// });
-// export const getNewBookError = (error: Error) => ({
-//   type: GET_NEW_BOOK_ERROR,
-//   payload: error,
-// });
-
-// export type GetBooksActionsType =
-//   | ReturnType<typeof getBestBookStart>
-//   | ReturnType<typeof getBestBookSuccess>
-//   | ReturnType<typeof getBestBookError>
-//   | ReturnType<typeof getRecommendBookStart>
-//   | ReturnType<typeof getRecommendBookSuccess>
-//   | ReturnType<typeof getRecommendBookError>
-//   | ReturnType<typeof getNewBookStart>
-//   | ReturnType<typeof getNewBookSuccess>
-//   | ReturnType<typeof getNewBookError>;
+        dispatch({
+          type: SET_MESSAGE,
+          payload: result,
+        });
+      }
+      return Promise.reject();
+    }
+  )
+}

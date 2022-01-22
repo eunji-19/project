@@ -1,7 +1,7 @@
-import { NextFunction } from "express";
 import fetch from "node-fetch";
 import { ModelList } from "../models/modelList";
 import { ClientToken, TokenFromClientToken } from "../models/brainToken";
+import { FindProjectType, MakeVideo } from "../models/makeVideo";
 
 /**
  * generateClientToken
@@ -76,4 +76,70 @@ const getModelList = async (token: string): Promise<ModelList | null> => {
   return getModel;
 };
 
-export default { generateClientToken, generateToken, getModelList };
+/**
+ * makeVideo
+ */
+const makeVideoKey = async (language: string, text: string, model: string, clothes: number, token: string): Promise<MakeVideo | null> => {
+  const makeVideoKeyURL = new URL(`${process.env.DEEP_BRAIN_URL}/makeVideo`);
+  const body = {
+    appId: process.env.DEEP_BRAIN_APPID,
+    platform: "web",
+    isClientToken: true,
+    token: token,
+    uuid: process.env.DEEP_BRAIN_USERKEY,
+    sdk_v: "1.0",
+    clientHostname: process.env.DEEP_BRAIN_CLIENTHOSTNAME,
+    language,
+    text,
+    model,
+    clothes
+  }
+  const getMakeVideoFetch = await fetch(makeVideoKeyURL.toString(), {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" },
+  });
+  const getMakeVideo = await getMakeVideoFetch.json();
+  return getMakeVideo;
+}
+
+/**
+ * make Video
+ */
+const makeVideo = async (key: string, token: string) => {
+  console.log("makeVideo ");
+  const makeVideoURL = new URL(`${process.env.DEEP_BRAIN_URL}/findProject`);
+  const body = {
+    appId: process.env.DEEP_BRAIN_APPID,
+    platform: "web",
+    isClientToken: true,
+    token: token,
+    uuid: process.env.DEEP_BRAIN_USERKEY,
+    sdk_v: "1.0",
+    clientHostname: process.env.DEEP_BRAIN_CLIENTHOSTNAME,
+    key,  
+  }
+
+  try {
+    const findProject = await makeVideoFetch(makeVideoURL.toString(), body);
+    while (!findProject.data.video) {
+      const fetchResult = await makeVideoFetch(makeVideoURL.toString(), body);
+      console.log("here?", fetchResult.data.progress);
+    }
+    console.log("finish!", findProject);
+    return findProject;
+  } catch (err) {
+    console.error(err.stack);
+  }
+}
+
+const makeVideoFetch = async (url: string, body: any): Promise<FindProjectType | null> => {
+  const result = await fetch(url.toString(), {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" },
+  })
+  return result.json();
+}
+
+export default { generateClientToken, generateToken, getModelList, makeVideoKey, makeVideo };
