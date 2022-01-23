@@ -10,7 +10,6 @@ import { LikeBookState } from "../redux/modules/book";
 import { getModelList, makeVideoKey } from "../redux/actions/brainActions";
 import { LikeBookReqType } from "../types";
 import { setLikeBook } from "../redux/actions/bookActions";
-import CustomVideoPlay from "./VideoPlay";
 
 const BookDetail = () => {
   const { id } = useParams();
@@ -205,9 +204,9 @@ const BookDetail = () => {
               </Space>
             )}
             <div style={{ display: "flex" }}>{listItems}</div>
-            {open && (
-              <CustomVideoPlay open={open} videoKeyType={videoKeyType} />
-            )}
+            {/* {open && (
+              // <CustomVideoPlay open={open} videoKeyType={videoKeyType} />
+            )} */}
             {/* {isValid && <Alert variant="warning">준비중입니다</Alert>} */}
             <Modal
               show={show}
