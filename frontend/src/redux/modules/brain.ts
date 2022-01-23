@@ -1,6 +1,6 @@
 import { AnyAction } from "@reduxjs/toolkit";
 import { Model } from "../../models/brain/Model";
-import { FindProjectType, MakeVideo } from "../../models/brain/Video";
+import { FindProject, FindProjectStatusMessage } from "../../models/brain/Video";
 import { FINDPROJECT_FAIL, FINDPROJECT_SUCCEESS, MAKEVIDEO_FAIL, MAKEVIDEO_SUCCESS, MODELLIST_FAIL, MODELLIST_SUCCESS } from "../actions/types";
 
 /**
@@ -43,7 +43,7 @@ export function model(
  * Video key
  */
 export interface VideoKeyState {
-  videoKey: MakeVideo | null;
+  videoKey: string | null;
   videoIsLoadig: boolean;
   error: any | null;
 }
@@ -59,7 +59,7 @@ export function videoKey(
   action: AnyAction
 ) {
   const { type, payload } = action;
-  console.log("payload ", payload);
+  // console.log("payload ", payload);
 
   switch (type) {
     case MAKEVIDEO_SUCCESS:
@@ -75,47 +75,6 @@ export function videoKey(
         vdieoKey: null,
         videoIsLoading: false,
         error: payload,
-      };
-    default:
-      return state;
-  }
-}
-
-/**
- * FIND Project
- */
-export interface FindProjectState {
-  findProject: FindProjectType | null;
-  projectIsLoading: boolean;
-  projectError: any | null;
-};
-
-const findProjectInitialState: FindProjectState = {
-  findProject: null,
-  projectIsLoading: true,
-  projectError: null
-};
-
-export function findProject(
-  state: FindProjectState = findProjectInitialState,
-  action: AnyAction
-) {
-  const { type, payload } = action;
-
-  switch (type) {
-    case FINDPROJECT_SUCCEESS:
-      return {
-        ...state,
-        findProject: payload,
-        projectIsLoading: false,
-        error: null,
-      };
-    case FINDPROJECT_FAIL:
-      return {
-        ...state,
-        findProject: null,
-        projectIsLoading: false,
-        error: null,
       };
     default:
       return state;

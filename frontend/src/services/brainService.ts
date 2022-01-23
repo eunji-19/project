@@ -18,10 +18,11 @@ export default class BrainService {
     })
   }
 
-  public static getFindProject(reqData: FindProjectReqType) {
-    return axios.post(`${APP_URL}/deepbrain/findProject`, reqData)
-      .then((response) => {
-        return response.data;
+  public static async getFindProject(reqData: FindProjectReqType) {
+    const result = await axios.post(`${APP_URL}/deepbrain/findProject`, reqData)
+      .catch((error) => {
+        return error;
       });
+    return result.data;
   }
 }

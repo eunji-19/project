@@ -35,7 +35,7 @@ const getRecommendSeller = async (
       "recommendBook",
       "recommend.api"
     );
-    res.status(200).json({ statueMessage: recommendBookResult });
+    res.status(200).json({ statusMessage: recommendBookResult });
   } catch (err) {
     next(err);
   }
@@ -54,7 +54,7 @@ const getNewSeller = async (
       "newBook",
       "newBook.api"
     );
-    res.status(200).json({ statueMessage: newBookResult });
+    res.status(200).json({ statusMessage: newBookResult });
   } catch (err) {
     next(err);
   }

@@ -2,6 +2,7 @@ import fetch from "node-fetch";
 import { ModelList } from "../models/modelList";
 import { ClientToken, TokenFromClientToken } from "../models/brainToken";
 import { FindProjectType, MakeVideo } from "../models/makeVideo";
+import axios from "axios";
 
 /**
  * generateClientToken
@@ -106,7 +107,7 @@ const makeVideoKey = async (language: string, text: string, model: string, cloth
 /**
  * make Video
  */
-const makeVideo = async (key: string, token: string): Promise<FindProjectType | null> => {
+const makeVideo = async (key: string, token: string) => {
   const makeVideoURL = new URL(`${process.env.DEEP_BRAIN_URL}/findProject`);
   const body = {
     appId: process.env.DEEP_BRAIN_APPID,
@@ -119,39 +120,13 @@ const makeVideo = async (key: string, token: string): Promise<FindProjectType | 
     key,  
   }
 
-try {
-    const findProject = await makeVideoFetch(makeVideoURL.toString(), body);
-    // console.log("!! ", findProject);
-    // if (findProject.success) {
-    //     // console.log("YA"); while (findProject.data.video) {    const fetchResult =
-    //     // await makeVideoFetch(makeVideoURL.toString(), body);   await
-    //     // makeVideoFetch(makeVideoURL.toString(), body);   console.log("! ",
-    //     // findProject.data.progress); }
-    //   if (findProject.data.video) {
-    //         return findProject;
-    //   } else {
-    //     console.log("! hje..")
-    //         while (findProject.data.video) {
-    //             // const fetchResult = await makeVideoFetch(makeVideoURL.toString(), body);
-    //           console.log(" HERE ")
-    //             await makeVideoFetch(makeVideoURL.toString(), body);
-    //         }
-    //     }
-    //     console.log("finish!", findProject);
-    // }
-
-    return findProject;
-  } catch (err) {
-    console.error(err.stack);
-  }
-}
-const makeVideoFetch = async (url: string, body: any): Promise<FindProjectType | null> => {
-  const result = await fetch(url.toString(), {
+  const getMakeVideoFetch = await fetch(makeVideoURL.toString(), {
     method: "POST",
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
-  })
-  return result.json();
+  });
+  const getMakeVideo = await getMakeVideoFetch.json();
+  return getMakeVideo;
 }
 
 export default { generateClientToken, generateToken, getModelList, makeVideoKey, makeVideo };

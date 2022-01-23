@@ -10,6 +10,7 @@ import { LikeBookState } from "../redux/modules/book";
 import { getModelList, makeVideoKey } from "../redux/actions/brainActions";
 import { LikeBookReqType } from "../types";
 import { setLikeBook } from "../redux/actions/bookActions";
+import CustomVideoPlay from "./CustomVideoPlay";
 
 const BookDetail = () => {
   const { id } = useParams();
@@ -90,7 +91,6 @@ const BookDetail = () => {
   }
 
   const listenAudio = (item: ModelInfo) => {
-    console.log("item ", item);
     if (item.language[0] !== "ko") {
       setShow(true);
     } else {
@@ -204,9 +204,9 @@ const BookDetail = () => {
               </Space>
             )}
             <div style={{ display: "flex" }}>{listItems}</div>
-            {/* {open && (
-              // <CustomVideoPlay open={open} videoKeyType={videoKeyType} />
-            )} */}
+            {open && (
+              <CustomVideoPlay open={open} videoKeyType={videoKeyType} />
+            )}
             {/* {isValid && <Alert variant="warning">준비중입니다</Alert>} */}
             <Modal
               show={show}

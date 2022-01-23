@@ -14,7 +14,7 @@ import {
 } from "./types";
 
 export const getBestSeller = () => async (dispatch: any) => {
-  return BookService.getBestSeller().then(
+  return await BookService.getBestSeller().then(
     (response) => {
       dispatch({
         type: BESTSELLER_SUCCESS,
@@ -48,7 +48,7 @@ export const getBestSeller = () => async (dispatch: any) => {
 };
 
 export const getRecommendSeller = () => async (dispatch: any) => {
-  return BookService.getRecommendSeller().then(
+  return await BookService.getRecommendSeller().then(
     (response) => {
       dispatch({
         type: RECOMMEND_SUCCESS,
@@ -82,7 +82,7 @@ export const getRecommendSeller = () => async (dispatch: any) => {
 };
 
 export const getNewSeller = () => async (dispatch: any) => {
-  return BookService.getNewSeller().then(
+  return await BookService.getNewSeller().then(
     (response) => {
       dispatch({
         type: NEW_SUCCESS,

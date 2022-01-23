@@ -17,12 +17,17 @@ const BookListContainer = () => {
   const dispatch = useAppDispatch();
 
   const fetchBookItem = () => {
-    dispatch(getBestSeller());
+    if (title === "BestSeller") {
+      dispatch(getBestSeller());
+    } else if (title === "New") {
+      dispatch(getNewSeller());
+    } else {
+      dispatch(getRecommendSeller());
+    }
   };
 
   useEffect(() => {
     fetchBookItem();
-    // console.log("tile ", title);
   }, [title]);
 
   return (
@@ -41,8 +46,6 @@ const BookListContainer = () => {
           </Space>
         </div>
       ) : (
-        // <div>ok</div>
-        // <BookCondition />
         <BookListNew book={bookState} />
       )}
     </div>

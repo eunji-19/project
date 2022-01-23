@@ -43,3 +43,8 @@ export type FindProjectReqType = {
   key: string;
   token: string;
 }
+
+export type FercherReqType = {
+  url: string;
+  reqData: FindProjectReqType;
+}

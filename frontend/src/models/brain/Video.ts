@@ -22,7 +22,11 @@ export interface Data {
 /**
  * find Project
  */
-export interface FindProjectType {
+export interface FindProject {
+    statusMessage: FindProjectStatusMessage;
+}
+
+export interface FindProjectStatusMessage {
     succeed?: boolean;
     success?: boolean;
     errorCode?: number;

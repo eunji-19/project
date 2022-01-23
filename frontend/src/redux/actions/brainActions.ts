@@ -51,7 +51,7 @@ export const makeVideoKey = (reqData: VideoKeyReqType) => async (dispatch: any) 
     console.log("response ", key);
     dispatch({
       type: MAKEVIDEO_SUCCESS,
-      payload: { vidoeKey: response}
+      payload: { vidoeKey: key}
     });
 
     dispatch({
@@ -78,42 +78,5 @@ export const makeVideoKey = (reqData: VideoKeyReqType) => async (dispatch: any) 
       }
       return Promise.reject();
     }
-  )
-}
-
-/**
- * Find Project 할때 
- */
-export const findProject = (reqData: FindProjectReqType) => async (dispatch: any) => {
-  return BrainService.getFindProject(reqData).then((response) => {
-    dispatch({
-      type: FINDPROJECT_SUCCEESS,
-      payload: { findProject: response }
-    });
-
-    dispatch({
-      type: SET_MESSAGE,
-      payload: response,
-    });
-
-    return Promise.resolve();
-  },
-  (error) => {
-    if (axios.isAxiosError(error)) {
-      const message = error.response;
-      const status = error.response?.status;
-      const result = { message, status };
-      dispatch({
-        type: FINDPROJECT_FAIL,
-        paylad: { error: result}
-      });
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: result,
-      });
-    }
-    return Promise.reject();
-  }
   )
 }
