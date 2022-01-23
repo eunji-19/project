@@ -72,11 +72,11 @@ const getLikeBook = async (req: Request, res: Response, next: NextFunction) => {
      */
     const existingLikeBook = await bookService.findLikeBook(email, title);
     if (existingLikeBook) {
-      // const deleteLikeBook = await bookService.deleteLikeBook(existingLikeBook);
-      // console.log("After delete ", deleteLikeBook); 
+      const deleteLikeBook = await bookService.deleteLikeBook(existingLikeBook);
+      console.log("After delete ", deleteLikeBook); 
       res
-        .status(400)
-        .json({ statusMessage: "좋아하는 책에서 삭제하시겠습니까?" });
+        .status(200)
+        .json({ statusMessage: "더이상 좋아하는 책이 아닙니다." });
       return;
     }
 
@@ -84,11 +84,49 @@ const getLikeBook = async (req: Request, res: Response, next: NextFunction) => {
      * 없으면 좋아요 기능 시작
      */
     const newLikeBook = await bookService.setLikeBook(email, title, author, smallImageUrl);
-    res.status(200).json(newLikeBook);
+    return res.status(200).json({statusMessage: newLikeBook});
 
   } catch (err) {
     next(err);
   }
 }
 
-export default { getBestSeller, getRecommendSeller, getNewSeller, getLikeBook };
+
+const getInitLikeBook = async (req: Request, res: Response, next: NextFunction) => {
+  const { email, title, author, smallImageUrl } = req.body;
+  try {
+    console.log("----like book start----");
+    /**
+     * 좋아요 책인지부터 확인 
+     */
+    const existingLikeBook = await bookService.findLikeBook(email, title);
+    console.log("exi ", existingLikeBook);
+    if (existingLikeBook) {
+      res.status(200).json({
+        statusMessage: {
+          title: existingLikeBook.title,
+      }});
+      return;
+    }
+    return res.status(200).json({statusMessage: "아직 좋아하는 책이 아닙니다."});
+
+  } catch (err) {
+    next(err);
+  }
+}
+
+/**
+ * 마이페이지에서 좋아하는책 리스트 나열 
+ */
+export const getMyBook = async (req: Request, res: Response, next: NextFunction) => {
+  const { email } = req.body;
+
+  try {
+    const myBookResult = await bookService.findMyBook(email);
+    return res.status(200).json({ statusMessage: myBookResult });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export default { getBestSeller, getRecommendSeller, getNewSeller, getLikeBook, getInitLikeBook, getMyBook };

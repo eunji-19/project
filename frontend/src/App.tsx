@@ -8,6 +8,7 @@ import Signup from "./pages/Signup";
 import Error from "./pages/Error";
 import Header from "./pages/Header";
 import Footer from "./pages/Footer";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/new" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/book/:id" element={<BookDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

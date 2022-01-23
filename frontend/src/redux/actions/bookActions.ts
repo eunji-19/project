@@ -120,13 +120,13 @@ export const setLikeBook = (reqData: LikeBookReqType) => async (dispatch: any) =
     console.log("Action ", response);
     dispatch({
       type: LIKEBOOK_SUCCESS,
-      payload: { likeBook: response },
+      payload: response.data,
     });
 
-    dispatch({
-      type: SET_MESSAGE,
-      payload: response,
-    });
+    // dispatch({
+    //   type: SET_MESSAGE,
+    //   payload: response,
+    // });
 
     return Promise.resolve();
   },
@@ -135,18 +135,17 @@ export const setLikeBook = (reqData: LikeBookReqType) => async (dispatch: any) =
         const message = error.response;
         const status = error.response?.status;
         const result = { message, status };
-        
-        console.log("error ", result);
 
+        console.log("error ", result)
         dispatch({
           type: LIKEBOOK_FAIL,
-          payload: {likeBook: result}
-        });
-
-        dispatch({
-          type: SET_MESSAGE,
           payload: result,
         });
+
+        // dispatch({
+        //   type: SET_MESSAGE,
+        //   payload: result,
+        // });
       }
       return Promise.reject();
     }

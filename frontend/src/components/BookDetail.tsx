@@ -11,6 +11,8 @@ import { getModelList, makeVideoKey } from "../redux/actions/brainActions";
 import { LikeBookReqType } from "../types";
 import { setLikeBook } from "../redux/actions/bookActions";
 import CustomVideoPlay from "./CustomVideoPlay";
+import axios from "axios";
+import { APP_URL } from "../configure";
 
 const BookDetail = () => {
   const { id } = useParams();
@@ -57,7 +59,46 @@ const BookDetail = () => {
   /**
    * 좋아하는 책
    */
-  const likeBook: LikeBookState = useAppSelector((state) => state.likeBook);
+  const [likeBook, setLikeBook] = useState(false);
+  const checkLikeBookState = async (reqType: LikeBookReqType) => {
+    console.log("likeBook ", reqType);
+    await axios.post(`${APP_URL}/book/initLike`, reqType).then((response) => {
+      if (response.data.statusMessage.title) {
+        setLikeBook(true);
+      }
+    });
+  };
+
+  useEffect(() => {
+    const email: string = user.statusMessage.user.email;
+    const reqType: LikeBookReqType = {
+      email: email,
+      title: selectBookState.title!,
+      author: selectBookState.author!,
+      smallImageUrl: selectBookState.smallImageUrl,
+    };
+    checkLikeBookState(reqType);
+  }, []);
+
+  const handleLikeBook = async (reqData: LikeBookReqType) => {
+    await axios
+      .post(`${APP_URL}/book/like`, reqData)
+      .then((response) => {
+        console.log("like Book ", response);
+        if (response.data.statusMessage.title) {
+          console.log("ok");
+          setLikeBook(true);
+        } else {
+          setLikeBook(false);
+        }
+      })
+      .catch((error) => {
+        if (axios.isAxiosError(error)) {
+          const errorMessage = error.response?.data.statusMessage;
+          message.warn(errorMessage);
+        }
+      });
+  };
 
   useEffect(() => {
     checkLogin();
@@ -162,8 +203,58 @@ const BookDetail = () => {
                 오디오북 듣기
               </Button>
               <div style={{ marginLeft: "10px" }}></div>
-              <Button
+              {likeBook ? (
+                <Button
+                  variant="success"
+                  // variant={likeBook ? "success" : "outline-success"}
+                  onClick={() => {
+                    if (!isLoggedIn) {
+                      message
+                        .info("로그인 후 사용가능")
+                        .then(() => navigate("/login"));
+                      setIsAudio(false);
+                    } else {
+                      const email: string = user.statusMessage.user.email;
+                      const reqType: LikeBookReqType = {
+                        email: email,
+                        title: selectBookState.title!,
+                        author: selectBookState.author!,
+                        smallImageUrl: selectBookState.smallImageUrl,
+                      };
+                      handleLikeBook(reqType);
+                    }
+                  }}
+                >
+                  😍좋아하는 책
+                </Button>
+              ) : (
+                <Button
+                  variant="outline-dark"
+                  // variant={likeBook ? "success" : "outline-success"}
+                  onClick={() => {
+                    if (!isLoggedIn) {
+                      message
+                        .info("로그인 후 사용가능")
+                        .then(() => navigate("/login"));
+                      setIsAudio(false);
+                    } else {
+                      const email: string = user.statusMessage.user.email;
+                      const reqType: LikeBookReqType = {
+                        email: email,
+                        title: selectBookState.title!,
+                        author: selectBookState.author!,
+                        smallImageUrl: selectBookState.smallImageUrl,
+                      };
+                      handleLikeBook(reqType);
+                    }
+                  }}
+                >
+                  책 담기
+                </Button>
+              )}
+              {/* <Button
                 variant="outline-dark"
+                // variant={likeBook ? "success" : "outline-success"}
                 onClick={() => {
                   if (!isLoggedIn) {
                     message
@@ -178,17 +269,12 @@ const BookDetail = () => {
                       author: selectBookState.author!,
                       smallImageUrl: selectBookState.smallImageUrl,
                     };
-                    console.log("req type ", reqType);
-                    dispatch(setLikeBook(reqType));
-                    if (likeBook.error) {
-                      console.log("error! ", likeBook.error);
-                      alert("삭제?");
-                    }
+                    handleLikeBook(reqType);
                   }
                 }}
               >
                 책 담기
-              </Button>
+              </Button> */}
             </div>
           </div>
         </div>

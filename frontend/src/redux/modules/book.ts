@@ -65,13 +65,13 @@ export function book(
 export interface LikeBookState {
   likeBook: LikeBook | null;
   isLoading: boolean;
-  error: AxiosError | null;
+  isLikeBookerror: any;
 }
 
 const likeInitialState: LikeBookState = {
   likeBook: null,
   isLoading: true,
-  error: null,
+  isLikeBookerror: null,
 };
 
 export function likeBook(
@@ -79,22 +79,22 @@ export function likeBook(
   action: AnyAction
 ) {
   const { type, payload } = action;
-  
+  // console.log("! ", payload);
   switch (type) {
     case LIKEBOOK_SUCCESS: 
       return {
         ...state,
-        likeBook: payload.likeBook,
+        likeBook: payload,
         isLoading: false,
         error: null,
       };
     case LIKEBOOK_FAIL: 
-      console.log("FAIL ", payload);
+      // console.log("FAIL ", payload);
       return {
         ...state,
         isLoading: false,
         likeBook: null,
-        error: payload.likeBook,
+        error: payload,
       };
     default:
       return state;

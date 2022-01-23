@@ -65,7 +65,9 @@ const NavHeader = () => {
           </Nav>
           {isLoggedIn ? (
             <Nav>
-              <Nav.Link>Hi, {user.statusMessage.user.nickname}😍</Nav.Link>
+              <Nav.Link href="/profile">
+                {user.statusMessage.user.nickname}님 프로필
+              </Nav.Link>
               <Nav.Link onClick={onClickLogout}>Logout</Nav.Link>
             </Nav>
           ) : (

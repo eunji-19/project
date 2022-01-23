@@ -50,8 +50,26 @@ router.post("/like", async (req: Request, res: Response, next: NextFunction) => 
     const result = await bookController.getLikeBook(req, res, next);
     return result;
   } catch (err) {
-    res.status(400).json({ statusMessage: err.message })
+    res.status(400).json({ statusMessage: err.message });
   }
 });
+
+router.post("/initLike", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await bookController.getInitLikeBook(req, res, next);
+    return result;
+  } catch (err) {
+    res.status(400).json({ statusMessage: err.message });
+  }
+})
+
+router.post("/myBook", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await bookController.getMyBook(req, res, next);
+    return result; 
+  } catch (err) {
+    res.status(400).json({ statusMessage: err.message });
+  }
+})
 
 export = router;

@@ -71,8 +71,8 @@ const getBookResult = async (category: string, subUrl: string) => {
  * 좋아하는 책인지 확인 
  */
 const findLikeBook = async (email: string, title: string) => {
+  console.log("!!!!");
   const findBook = await LikeBookModel.findOne({ title: title, email: email });
-  console.log("findLikeBok ", findBook);
   return findBook;
 }
 
@@ -93,4 +93,11 @@ const setLikeBook = async (email: string, title: string, author: string, smallIm
   return await likeBook.save();
 }
 
-export default { getBookResult, findLikeBook, deleteLikeBook, setLikeBook };
+const findMyBook = async (email: string) => {
+  console.log("email ", email);
+  const myBook = await LikeBookModel.find({ email: email });
+  console.log("?", myBook);
+  return myBook;
+}
+
+export default { getBookResult, findLikeBook, deleteLikeBook, setLikeBook, findMyBook };

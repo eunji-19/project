@@ -21,20 +21,6 @@
         "summary": "로그인",
         "description": "로그인 하기 위한 POST API",
         "produces": ["application/json"],
-        // "parameters": [
-        //   {
-        //     "in": "body",
-        //     "name": "body",
-        //     "description": "로그인 위한 Object",
-        //     "requried": "true",
-        //     "schema": {
-        //       "type": "object",
-        //       "properties": {
-        //         "email":
-        //       }
-        //     }
-        //   }
-        // ],
         "responses": {
           "200": {
             "description": "successful",
