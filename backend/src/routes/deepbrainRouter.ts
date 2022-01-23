@@ -21,7 +21,7 @@ router.post(
 /**
  * make video key
  */
-router.post("/makeVideoKey", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/makeVideo", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await deepbrainController.makeVideoKey(req, res, next);
     return result;
@@ -33,7 +33,7 @@ router.post("/makeVideoKey", async (req: Request, res: Response, next: NextFunct
 /**
  * make video
  */
-router.post("/makeVideo", async (req: Request, res: Response, next: NextFunction) => {
+router.post("/findProject", async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await deepbrainController.makeVideo(req, res, next);
     return result;

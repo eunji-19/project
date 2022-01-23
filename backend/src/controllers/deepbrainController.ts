@@ -77,6 +77,11 @@ const makeVideo = async (req: Request, res: Response, next: NextFunction) => {
   const { key, token } = req.body;
   try {
     const result = await deepbrainService.makeVideo(key, token);
+    console.log("Result ", result);
+    // if (result.success) {
+    //   res.status(400).json({ statusMessage: result });
+    //   return;
+    // }
     return res.status(200).json({ statusMessage: result });
   } catch (err) {
     next(err);

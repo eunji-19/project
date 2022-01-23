@@ -1,3 +1,6 @@
+/**
+ * 회원가입 / 로그인 / 로그아웃
+ */
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
@@ -8,6 +11,9 @@ export const LOGOUT_FAIL = "LOGOUT_FAIL";
 export const SET_MESSAGE = "SET_MESSAGE";
 export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
 
+/**
+ * 베스트셀러 / 추천도서 / 신규도서 / 좋아요 =도서 
+ */
 export const BESTSELLER_SUCCESS = "BESTSELLER_SUCCESS";
 export const BESTSELLER_FAIL = "BESTSELLER_FAIL";
 export const RECOMMEND_SUCCESS = "RECOMMEND_SUCCESS";
@@ -17,5 +23,20 @@ export const NEW_FAIL = "NEW_FAIL";
 export const LIKEBOOK_SUCCESS = "LIKEBOOK_SUCCESS";
 export const LIKEBOOK_FAIL = "LIKEBOOK_FAIL";
 
+/**
+ * MODEL LIST
+ */
 export const MODELLIST_SUCCESS = "MODELLIST_SUCCESS";
 export const MODELLIST_FAIL = "MODELLIST_FAIL";
+
+/**
+ * MAKE VIDEO 
+ */
+export const MAKEVIDEO_SUCCESS = "MAKEVIDEO_SUCCESS";
+export const MAKEVIDEO_FAIL = "MAKEVIDEO_FAIL";
+
+/**
+ * FIND PROJECT
+ */
+export const FINDPROJECT_SUCCEESS = "FINDPROJECT_SUCCEESS";
+export const FINDPROJECT_FAIL = "FINDPROJECT_FAIL";

@@ -32,3 +32,12 @@ export interface Expertise {
   ko: string;
   zh: string;
 }
+
+export interface ModelInfo {
+  imgUrl: string;
+  name: string;
+  language: string[];
+  expertise: string;
+  clothes: Clothe[];
+  modelId: string;
+}

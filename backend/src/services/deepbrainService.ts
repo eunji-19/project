@@ -106,8 +106,7 @@ const makeVideoKey = async (language: string, text: string, model: string, cloth
 /**
  * make Video
  */
-const makeVideo = async (key: string, token: string) => {
-  console.log("makeVideo ");
+const makeVideo = async (key: string, token: string): Promise<FindProjectType | null> => {
   const makeVideoURL = new URL(`${process.env.DEEP_BRAIN_URL}/findProject`);
   const body = {
     appId: process.env.DEEP_BRAIN_APPID,
@@ -120,19 +119,32 @@ const makeVideo = async (key: string, token: string) => {
     key,  
   }
 
-  try {
+try {
     const findProject = await makeVideoFetch(makeVideoURL.toString(), body);
-    while (!findProject.data.video) {
-      const fetchResult = await makeVideoFetch(makeVideoURL.toString(), body);
-      console.log("here?", fetchResult.data.progress);
-    }
-    console.log("finish!", findProject);
+    // console.log("!! ", findProject);
+    // if (findProject.success) {
+    //     // console.log("YA"); while (findProject.data.video) {    const fetchResult =
+    //     // await makeVideoFetch(makeVideoURL.toString(), body);   await
+    //     // makeVideoFetch(makeVideoURL.toString(), body);   console.log("! ",
+    //     // findProject.data.progress); }
+    //   if (findProject.data.video) {
+    //         return findProject;
+    //   } else {
+    //     console.log("! hje..")
+    //         while (findProject.data.video) {
+    //             // const fetchResult = await makeVideoFetch(makeVideoURL.toString(), body);
+    //           console.log(" HERE ")
+    //             await makeVideoFetch(makeVideoURL.toString(), body);
+    //         }
+    //     }
+    //     console.log("finish!", findProject);
+    // }
+
     return findProject;
   } catch (err) {
     console.error(err.stack);
   }
 }
-
 const makeVideoFetch = async (url: string, body: any): Promise<FindProjectType | null> => {
   const result = await fetch(url.toString(), {
     method: "POST",
