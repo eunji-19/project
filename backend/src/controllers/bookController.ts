@@ -61,43 +61,85 @@ const getNewSeller = async (
 };
 
 /**
- * 좋아하는 책 / 취소 
+ * 좋아하는 책 / 취소
  */
 const getLikeBook = async (req: Request, res: Response, next: NextFunction) => {
-  const { email, title, author, smallImageUrl } = req.body;
+  const {
+    href,
+    title,
+    avatar,
+    content,
+    coverLargeUrl,
+    author,
+    publisher,
+    customerReviewRank,
+    priceStandard,
+    coverSmallUrl,
+    categoryName,
+    isbn,
+    email,
+  } = req.body;
   try {
     console.log("----like book start----");
     /**
-     * 좋아요 책인지부터 확인 
+     * 좋아요 책인지부터 확인
      */
     const existingLikeBook = await bookService.findLikeBook(email, title);
     if (existingLikeBook) {
       const deleteLikeBook = await bookService.deleteLikeBook(existingLikeBook);
-      console.log("After delete ", deleteLikeBook); 
-      res
-        .status(200)
-        .json({ statusMessage: "더이상 좋아하는 책이 아닙니다." });
+      console.log("After delete ", deleteLikeBook);
+      res.status(200).json({ statusMessage: "더이상 좋아하는 책이 아닙니다." });
       return;
     }
 
     /**
      * 없으면 좋아요 기능 시작
      */
-    const newLikeBook = await bookService.setLikeBook(email, title, author, smallImageUrl);
-    return res.status(200).json({statusMessage: newLikeBook});
-
+    const newLikeBook = await bookService.setLikeBook(
+      href,
+      title,
+      avatar,
+      content,
+      coverLargeUrl,
+      author,
+      publisher,
+      customerReviewRank,
+      priceStandard,
+      coverSmallUrl,
+      categoryName,
+      isbn,
+      email
+    );
+    return res.status(200).json({ statusMessage: newLikeBook });
   } catch (err) {
     next(err);
   }
-}
+};
 
-
-const getInitLikeBook = async (req: Request, res: Response, next: NextFunction) => {
-  const { email, title, author, smallImageUrl } = req.body;
+const getInitLikeBook = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const {
+    href,
+    title,
+    avatar,
+    content,
+    coverLargeUrl,
+    author,
+    publisher,
+    customerReviewRank,
+    priceStandard,
+    coverSmallUrl,
+    categoryName,
+    isbn,
+    email,
+  } = req.body;
   try {
     console.log("----like book start----");
     /**
-     * 좋아요 책인지부터 확인 
+     * 좋아요 책인지부터 확인
      */
     const existingLikeBook = await bookService.findLikeBook(email, title);
     console.log("exi ", existingLikeBook);
@@ -105,20 +147,26 @@ const getInitLikeBook = async (req: Request, res: Response, next: NextFunction) 
       res.status(200).json({
         statusMessage: {
           title: existingLikeBook.title,
-      }});
+        },
+      });
       return;
     }
-    return res.status(200).json({statusMessage: "아직 좋아하는 책이 아닙니다."});
-
+    return res
+      .status(200)
+      .json({ statusMessage: "아직 좋아하는 책이 아닙니다." });
   } catch (err) {
     next(err);
   }
-}
+};
 
 /**
- * 마이페이지에서 좋아하는책 리스트 나열 
+ * 마이페이지에서 좋아하는책 리스트 나열
  */
-export const getMyBook = async (req: Request, res: Response, next: NextFunction) => {
+export const getMyBook = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { email } = req.body;
 
   try {
@@ -127,6 +175,13 @@ export const getMyBook = async (req: Request, res: Response, next: NextFunction)
   } catch (err) {
     next(err);
   }
-}
+};
 
-export default { getBestSeller, getRecommendSeller, getNewSeller, getLikeBook, getInitLikeBook, getMyBook };
+export default {
+  getBestSeller,
+  getRecommendSeller,
+  getNewSeller,
+  getLikeBook,
+  getInitLikeBook,
+  getMyBook,
+};

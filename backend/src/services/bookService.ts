@@ -89,12 +89,35 @@ const deleteLikeBook = async (existingLikeBook: any) => {
  * 좋아하는 책 생성
  */
 const setLikeBook = async (
-  email: string,
+  href: string,
   title: string,
+  avatar: string,
+  content: string,
+  coverLargeUrl: string,
   author: string,
-  smallImageUrl: string
+  publisher: string,
+  customerReviewRank: number,
+  priceStandard: number,
+  coverSmallUrl: string,
+  categoryName: string,
+  isbn: string,
+  email: string
 ) => {
-  const likeBook = new LikeBookModel({ email, title, author, smallImageUrl });
+  const likeBook = new LikeBookModel({
+    href,
+    title,
+    avatar,
+    content,
+    coverLargeUrl,
+    author,
+    publisher,
+    customerReviewRank,
+    priceStandard,
+    coverSmallUrl,
+    categoryName,
+    isbn,
+    email,
+  });
   return await likeBook.save();
 };
 
