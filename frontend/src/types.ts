@@ -52,3 +52,11 @@ export type FindProjectReqType = {
   key: string;
   token: string;
 };
+
+/**
+ * Find LIKE BOOK
+ */
+export type FindLikeBookReqType = {
+  email: string;
+  title: string;
+}

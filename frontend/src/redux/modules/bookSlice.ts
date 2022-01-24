@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Book, LikeBook } from "../../models/Book";
-import { bestSeller, recommendSeller, newSeller, doLikeBook, initLikeBook } from "../actions/_bookAction";
+import { bestSeller, recommendSeller, newSeller, doLikeBook, initLikeBook, findLikeBook } from "../actions/_bookAction";
 
 export interface BookState {
   books: Book | null;
@@ -201,9 +201,21 @@ const LikeBookSlice = createSlice({
         state.likeBook = null;
         state.likeBookLoading = false;
         state.likeBookError = action.payload
+      })
+      .addCase(findLikeBook.pending, (state, action) => {
+        state.likeBookLoading = true;
+      })
+      .addCase(findLikeBook.fulfilled, (state, action) => {
+        state.likeBook = action.payload;
+        state.likeBookLoading = false;
+        state.likeBookError = null;
+      })
+      .addCase(findLikeBook.rejected, (state, action: PayloadAction<any>) => {
+        state.likeBook = null;
+        state.likeBookLoading = false;
+        state.likeBookError = action.payload
       });
   }
 })
-
 export const { setLikeBookState } = LikeBookSlice.actions;
 export { BookSlice, BookDetailSlice, LikeBookSlice };

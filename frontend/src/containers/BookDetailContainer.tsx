@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import BookDetail from "../components/BookDetail";
 import SelectBook from "../components/SelectBook";
 import _SelectBook from "../components/_SelectBook";
-import { initLikeBook } from "../redux/actions/_bookAction";
+import { ModelElement, ModelInfo } from "../models/brain/Model";
+import { getModelList } from "../redux/actions/brainActions";
+import { findLikeBook, initLikeBook } from "../redux/actions/_bookAction";
 import { brainModel } from "../redux/actions/_brainAction";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import { setLikeBookState } from "../redux/modules/bookSlice";
@@ -18,34 +20,58 @@ const BookDetailContainer = () => {
 
   const [loading, setLoading] = useState(true);
 
+  // const initItem = () => {
+  //   if (isLoggedIn) {
+  //     console.log("req!! ", loading);
+  //     const email = user!.statusMessage.user.email;
+  //     const likeBookReqType: LikeBookReqType = {
+  //       href: bookDetail.href,
+  //       title: bookDetail.title,
+  //       avatar: bookDetail.avatar,
+  //       content: bookDetail.content,
+  //       coverLargeUrl: bookDetail.coverLargeUrl,
+  //       author: bookDetail.author,
+  //       publisher: bookDetail.publisher,
+  //       customerReviewRank: bookDetail.customerReviewRank,
+  //       priceStandard: bookDetail.priceStandard,
+  //       coverSmallUrl: bookDetail.coverSmallUrl,
+  //       categoryName: bookDetail.categoryName,
+  //       isbn: bookDetail.isbn,
+  //       email: email,
+  //     };
+
+  //     dispatch(initLikeBook(likeBookReqType));
+  //     console.log("req12 ", likeBook);
+  //     dispatch(brainModel(user!.statusMessage.user.generateToken));
+  //     setLoading(false);
+  //   }
+  //   setLoading(false);
+  // };
+  // console.log("req ", loading);
+
+  // useEffect(() => {
+  //   initItem();
+  // }, [dispatch]);
+
   const initItem = () => {
     if (isLoggedIn) {
-      console.log("req!! ", loading);
       const email = user!.statusMessage.user.email;
-      const likeBookReqType: LikeBookReqType = {
-        href: bookDetail.href,
-        title: bookDetail.title,
-        avatar: bookDetail.avatar,
-        content: bookDetail.content,
-        coverLargeUrl: bookDetail.coverLargeUrl,
-        author: bookDetail.author,
-        publisher: bookDetail.publisher,
-        customerReviewRank: bookDetail.customerReviewRank,
-        priceStandard: bookDetail.priceStandard,
-        coverSmallUrl: bookDetail.coverSmallUrl,
-        categoryName: bookDetail.categoryName,
-        isbn: bookDetail.isbn,
-        email: email,
-      };
-
-      dispatch(initLikeBook(likeBookReqType));
-      console.log("req12 ", likeBook);
-      dispatch(brainModel(user!.statusMessage.user.generateToken));
+      const title = bookDetail.title;
+      const token = user!.statusMessage.user.generateToken;
+      /**
+       * 좋아하는 책 찾음 -> 모델리스트 받아옴
+       */
+      dispatch(findLikeBook({ email, title })).then(() => {
+        // setLoading(false);
+        dispatch(brainModel(token)).then((response) => {
+          // setLoading(false);
+          setLoading(false);
+        });
+      });
+    } else {
       setLoading(false);
     }
-    setLoading(false);
   };
-  console.log("req ", loading);
 
   useEffect(() => {
     initItem();

@@ -155,7 +155,7 @@ const BookCategoryList: React.FC<BookProps> = ({ book }) => {
                 />
               }
               onClick={() => {
-                console.log("Click book", item);
+                // console.log("Click book", item);
                 // const selectBookPayload: SelectBookPayload = {
                 //   title: item.title,
                 //   author: item.author,
