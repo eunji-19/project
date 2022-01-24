@@ -14,14 +14,14 @@ export interface AuthStatusMessage {
 export interface AuthCreatedUser {
   nickname: string;
   email: string;
-  password: string;
-  seq: number;
-  _id: string;
-  date: Date;
-  brainToken: any[];
-  createdAt: Date;
-  updatedAt: Date;
-  __v: number;
+  password?: string;
+  seq?: number;
+  _id?: string;
+  date?: Date;
+  brainToken?: any[];
+  createdAt?: Date;
+  updatedAt?: Date;
+  __v?: number;
 }
 
 export interface AuthSignUpError {
@@ -44,14 +44,14 @@ export interface StatusMessage {
 }
 
 export interface User {
-  _id: string;
+  _id?: string;
   nickname: string;
   email: string;
-  password: string;
-  seq: number;
-  date: Date;
-  createdAt: Date;
-  updatedAt: Date;
-  __v: number;
-  generate_token: string;
+  password?: string;
+  seq?: number;
+  date?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
+  __v?: number;
+  generateToken: string;
 }

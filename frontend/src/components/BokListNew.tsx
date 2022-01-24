@@ -105,6 +105,7 @@ const BookListNew: React.FC<BookProps> = ({ book }) => {
                 smallImageUrl: item.coverSmallUrl,
                 largeImageUrl: item.coverLargeUrl,
                 categoryName: item.categoryName,
+                isbn: item.isbn,
               };
               dispatch(setSelectBook(selectBookPayload));
               navigate(`/book/${item.isbn}`);

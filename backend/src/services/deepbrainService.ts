@@ -80,7 +80,13 @@ const getModelList = async (token: string): Promise<ModelList | null> => {
 /**
  * makeVideo
  */
-const makeVideoKey = async (language: string, text: string, model: string, clothes: number, token: string): Promise<MakeVideo | null> => {
+const makeVideoKey = async (
+  language: string,
+  text: string,
+  model: string,
+  clothes: number,
+  token: string
+): Promise<MakeVideo | null> => {
   const makeVideoKeyURL = new URL(`${process.env.DEEP_BRAIN_URL}/makeVideo`);
   const body = {
     appId: process.env.DEEP_BRAIN_APPID,
@@ -93,8 +99,8 @@ const makeVideoKey = async (language: string, text: string, model: string, cloth
     language,
     text,
     model,
-    clothes
-  }
+    clothes,
+  };
   const getMakeVideoFetch = await fetch(makeVideoKeyURL.toString(), {
     method: "POST",
     body: JSON.stringify(body),
@@ -102,7 +108,7 @@ const makeVideoKey = async (language: string, text: string, model: string, cloth
   });
   const getMakeVideo = await getMakeVideoFetch.json();
   return getMakeVideo;
-}
+};
 
 /**
  * make Video
@@ -117,9 +123,10 @@ const makeVideo = async (key: string, token: string) => {
     uuid: process.env.DEEP_BRAIN_USERKEY,
     sdk_v: "1.0",
     clientHostname: process.env.DEEP_BRAIN_CLIENTHOSTNAME,
-    key,  
-  }
+    key,
+  };
 
+  console.log(JSON.stringify(body));
   const getMakeVideoFetch = await fetch(makeVideoURL.toString(), {
     method: "POST",
     body: JSON.stringify(body),
@@ -127,6 +134,12 @@ const makeVideo = async (key: string, token: string) => {
   });
   const getMakeVideo = await getMakeVideoFetch.json();
   return getMakeVideo;
-}
+};
 
-export default { generateClientToken, generateToken, getModelList, makeVideoKey, makeVideo };
+export default {
+  generateClientToken,
+  generateToken,
+  getModelList,
+  makeVideoKey,
+  makeVideo,
+};

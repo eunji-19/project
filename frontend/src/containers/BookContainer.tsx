@@ -11,7 +11,7 @@ import { BookState } from "../redux/modules/book";
 import { MenuIndexState } from "../redux/modules/menuIndex";
 import { Spin, Space } from "antd";
 
-const BookListContainer = () => {
+const BookContainer = () => {
   const { title }: MenuIndexState = useAppSelector((state) => state.menuIndex);
   const bookState: BookState = useAppSelector((state) => state.book);
   const dispatch = useAppDispatch();
@@ -53,4 +53,4 @@ const BookListContainer = () => {
   );
 };
 
-export default BookListContainer;
+export default BookContainer;

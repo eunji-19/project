@@ -102,10 +102,21 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
       // maxAge: 18000000,
     });
 
+    /**
+     * 
+          email: existingUser.email,
+          nickname: existingUser.nickname,
+          generateToken: existingUser.generate_token,
+     */
     res.status(200).json({
       statusMessage: {
         access_token: accessToken,
-        user: existingUser,
+        user: {
+          email: existingUser.email,
+          nickname: existingUser.nickname,
+          generateToken: existingUser.generate_token,
+        },
+        // user: existingUser,
         message: "로그인성공!",
       },
     });

@@ -19,6 +19,7 @@ const BookDetail = () => {
   const selectBookState: SelectBookState = useAppSelector(
     (state) => state.selectBook
   );
+  console.log("SelectedBook ", selectBookState);
   /**
    * 로그인여부 확인
    */
@@ -61,7 +62,6 @@ const BookDetail = () => {
    */
   const [likeBook, setLikeBook] = useState(false);
   const checkLikeBookState = async (reqType: LikeBookReqType) => {
-    console.log("likeBook ", reqType);
     await axios.post(`${APP_URL}/book/initLike`, reqType).then((response) => {
       if (response.data.statusMessage.title) {
         setLikeBook(true);
@@ -75,7 +75,7 @@ const BookDetail = () => {
       email: email,
       title: selectBookState.title!,
       author: selectBookState.author!,
-      smallImageUrl: selectBookState.smallImageUrl,
+      smallImageUrl: selectBookState.largeImageUrl,
     };
     checkLikeBookState(reqType);
   }, []);
@@ -84,9 +84,7 @@ const BookDetail = () => {
     await axios
       .post(`${APP_URL}/book/like`, reqData)
       .then((response) => {
-        console.log("like Book ", response);
         if (response.data.statusMessage.title) {
-          console.log("ok");
           setLikeBook(true);
         } else {
           setLikeBook(false);
@@ -107,7 +105,7 @@ const BookDetail = () => {
 
   const checkLogin = () => {
     if (user) {
-      generateToken = user.statusMessage.user.generate_token;
+      generateToken = user.statusMessage.user.generateToken;
       console.log("generateToken ", generateToken);
       dispatch(getModelList(generateToken));
     }
@@ -140,9 +138,17 @@ const BookDetail = () => {
       setVideoKeyType({
         language: item.language[0],
         // text: selectBookState.description!,
-        text: "이것은 테스트입니다.",
+        text:
+          "이 책은 " +
+          selectBookState.title +
+          " 제목이며 저자는 " +
+          selectBookState.author +
+          " 입니다. 이후부터는 준비중이니 조금만 기다려주세요",
+        // selectBookState.title!.substring(0, 20) +
+        // "이후부터는 준비중입니다.",
+        // text: "이것은 테스트입니다.",
         model: item.modelId,
-        token: user.statusMessage.user.generate_token,
+        token: user.statusMessage.user.generateToken,
         clothes: parseInt(item.clothes[0].id),
       });
     }
@@ -219,7 +225,7 @@ const BookDetail = () => {
                         email: email,
                         title: selectBookState.title!,
                         author: selectBookState.author!,
-                        smallImageUrl: selectBookState.smallImageUrl,
+                        smallImageUrl: selectBookState.largeImageUrl,
                       };
                       handleLikeBook(reqType);
                     }
@@ -243,7 +249,7 @@ const BookDetail = () => {
                         email: email,
                         title: selectBookState.title!,
                         author: selectBookState.author!,
-                        smallImageUrl: selectBookState.smallImageUrl,
+                        smallImageUrl: selectBookState.largeImageUrl,
                       };
                       handleLikeBook(reqType);
                     }

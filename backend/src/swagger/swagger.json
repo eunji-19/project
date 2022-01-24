@@ -3,7 +3,7 @@
   "info": {
     "description": "React Book 페이지를 위한 API입니다",
     "version": "1.0.0",
-    "title": "BOOk API",
+    "title": "BOOK API",
     "contact": {
       "email": "dmswlc19@gmail.com"
     },
@@ -12,15 +12,32 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
+  "tags": [
+    {
+      "name": "Auth"
+    }
+  ],
   "schemes": ["http"],
   "host": "localhost:5000",
   "basePath": "/api",
   "paths": {
     "/auth/login": {
       "post": {
+        "tags": ["Auth"],
         "summary": "로그인",
         "description": "로그인 하기 위한 POST API",
         "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/loginParams"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "successful",
@@ -165,7 +182,18 @@
     }
   },
   "definitions": {
-    "todosResponse": {
+    "loginParams": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "loginResponse": {
       "type": "object",
       "properties": {
         "id": {

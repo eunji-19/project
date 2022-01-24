@@ -131,17 +131,17 @@ const BookList: React.FC<BookProps> = ({ menuIndex, book }) => {
               />
             }
             onClick={() => {
-              const selectBookPayload: SelectBookPayload = {
-                title: example.title,
-                author: example.author,
-                description: example.description,
-                price: example.priceStandard,
-                smallImageUrl: example.coverSmallUrl,
-                largeImageUrl: example.coverLargeUrl,
-                categoryName: example.categoryName,
-              };
-              dispatch(setSelectBook(selectBookPayload));
-              navigate(`/book/${example.isbn}`);
+              // const selectBookPayload: SelectBookPayload = {
+              //   title: example.title,
+              //   author: example.author,
+              //   description: example.description,
+              //   price: example.priceStandard,
+              //   smallImageUrl: example.coverSmallUrl,
+              //   largeImageUrl: example.coverLargeUrl,
+              //   categoryName: example.categoryName,
+              // };
+              // dispatch(setSelectBook(selectBookPayload));
+              // navigate(`/book/${example.isbn}`);
             }}
           >
             <List.Item.Meta

@@ -12,6 +12,7 @@ export interface SelectBookState {
   smallImageUrl: string;
   largeImageUrl: string;
   categoryName: string | null;
+  isbn: string | null;
 }
 
 export type SelectBookPayload = {
@@ -22,6 +23,7 @@ export type SelectBookPayload = {
   smallImageUrl: string;
   largeImageUrl: string;
   categoryName: string | null;
+  isbn: string | null;
 };
 
 const initialState: SelectBookState = {
@@ -32,6 +34,7 @@ const initialState: SelectBookState = {
   smallImageUrl: "",
   largeImageUrl: "",
   categoryName: null,
+  isbn: null,
 };
 
 export const selectBookSlice = createSlice({
@@ -49,6 +52,7 @@ export const selectBookSlice = createSlice({
       state.smallImageUrl = action.payload.smallImageUrl;
       state.largeImageUrl = action.payload.largeImageUrl;
       state.categoryName = action.payload.categoryName;
+      state.isbn = action.payload.isbn;
     },
   },
 });

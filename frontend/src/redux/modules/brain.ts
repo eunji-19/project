@@ -1,10 +1,20 @@
 import { AnyAction } from "@reduxjs/toolkit";
 import { Model } from "../../models/brain/Model";
-import { FindProject, FindProjectStatusMessage } from "../../models/brain/Video";
-import { FINDPROJECT_FAIL, FINDPROJECT_SUCCEESS, MAKEVIDEO_FAIL, MAKEVIDEO_SUCCESS, MODELLIST_FAIL, MODELLIST_SUCCESS } from "../actions/types";
+import {
+  FindProject,
+  FindProjectStatusMessage,
+} from "../../models/brain/Video";
+import {
+  FINDPROJECT_FAIL,
+  FINDPROJECT_SUCCEESS,
+  MAKEVIDEO_FAIL,
+  MAKEVIDEO_SUCCESS,
+  MODELLIST_FAIL,
+  MODELLIST_SUCCESS,
+} from "../actions/types";
 
 /**
- * MODEL 
+ * MODEL
  */
 export interface ModelState {
   model: Model | null;
@@ -52,7 +62,7 @@ const videoInitialState: VideoKeyState = {
   videoKey: null,
   videoIsLoadig: true,
   error: null,
-}
+};
 
 export function videoKey(
   state: VideoKeyState = videoInitialState,
@@ -66,7 +76,7 @@ export function videoKey(
       return {
         ...state,
         videoKey: payload,
-        videoIsoading: false,
+        videoIsLoading: false,
         error: null,
       };
     case MAKEVIDEO_FAIL:

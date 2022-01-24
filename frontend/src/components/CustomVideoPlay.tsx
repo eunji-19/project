@@ -18,19 +18,16 @@ const CustomVideoPlay: React.FC<CustomVideoPlayProps> = ({
   open,
   videoKeyType,
 }) => {
-  const videoKeyState: VideoKeyState = useAppSelector(
-    (state) => state.videoKey
-  );
   const [videoUrl, setVideoUrl] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useAppDispatch();
 
   const getVideo = async () => {
-    dispatch(makeVideoKey(videoKeyType));
-    const videoKey = videoKeyState.videoKey;
+    const videoKey = await BrainService.getMakeVideoKey(videoKeyType);
+    console.log("videoKey ", videoKey);
     const reqData: FindProjectReqType = {
-      //   key: videoKey!,
-      key: "-Mu4tJhSg2T_5NtMjIkt",
+      key: videoKey.statusMessage.data.key,
+      // key: videoKey!,
+      // key: "-Mu4tJhSg2T_5NtMjIkt",
       //   key: "-Mu4rV1kATVjOgJbW-BN",
       token: videoKeyType.token,
     };
@@ -45,7 +42,7 @@ const CustomVideoPlay: React.FC<CustomVideoPlayProps> = ({
       } else {
         setVideoUrl(result.statusMessage.data.video);
         setIsLoading(false);
-        console.log(result);
+        console.log("getFindProject ", result);
       }
     };
     getFindProject();

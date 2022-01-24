@@ -18,6 +18,7 @@ const Profile = () => {
 
   const [myBook, setMyBook] = useState<MyBookType[]>([]);
   const [loading, setLoading] = useState(true);
+  const listData: any[] = [];
 
   const getMyBook = async () => {
     const email = user.statusMessage.user.email;
@@ -25,6 +26,7 @@ const Profile = () => {
     const result = await axios.post(`${APP_URL}/book/myBook`, { email: email });
     setMyBook(result.data.statusMessage);
     setLoading(false);
+    // setBookList();
     // await axios
     //   .post(`${APP_URL}/book/myBook`, { email: email })
     //   .then((response) => {
@@ -34,6 +36,39 @@ const Profile = () => {
     //     setLoading(false);
     //   });
   };
+
+  if (myBook.length !== 0) {
+    if (myBook.length > 5) {
+      for (let i = 0; i < 5; i++) {
+        listData.push({
+          title: myBook[i].title,
+          author: myBook[i].author,
+          smallImageUrl: myBook[i].smallImageUrl,
+        });
+      }
+    } else {
+      for (let i = 0; i < myBook.length; i++) {
+        listData.push({
+          title: myBook[i].title,
+          author: myBook[i].author,
+          smallImageUrl: myBook[i].smallImageUrl,
+        });
+      }
+    }
+  }
+
+  const likeBookUI = listData.map((item, index) => (
+    <Card key={index} style={{ width: "15rem" }}>
+      <Card.Img variant="top" src={item.smallImageUrl} />
+      <Card.Body>
+        <Card.Title>{item.title}</Card.Title>
+        <Card.Text>
+          저자: <span>{item.author}</span>
+          <br />
+        </Card.Text>
+      </Card.Body>
+    </Card>
+  ));
 
   useEffect(() => {
     getMyBook();
@@ -96,7 +131,9 @@ const Profile = () => {
         </Card>
       </div>
       <div>{user.statusMessage.user.nickname} 님이 좋아하는 책</div>
-      {myBook.length !== 0 && <div style={{ display: "flex" }}></div>}
+      {listData.length !== 0 && (
+        <div style={{ display: "flex" }}>{likeBookUI}</div>
+      )}
     </div>
   );
 };
