@@ -71,13 +71,13 @@ const BookDetail = () => {
 
   useEffect(() => {
     const email: string = user.statusMessage.user.email;
-    const reqType: LikeBookReqType = {
-      email: email,
-      title: selectBookState.title!,
-      author: selectBookState.author!,
-      smallImageUrl: selectBookState.largeImageUrl,
-    };
-    checkLikeBookState(reqType);
+    // const reqType: LikeBookReqType = {
+    //   email: email,
+    //   title: selectBookState.title!,
+    //   author: selectBookState.author!,
+    //   smallImageUrl: selectBookState.largeImageUrl,
+    // };
+    // checkLikeBookState(reqType);
   }, []);
 
   const handleLikeBook = async (reqData: LikeBookReqType) => {
@@ -221,13 +221,13 @@ const BookDetail = () => {
                       setIsAudio(false);
                     } else {
                       const email: string = user.statusMessage.user.email;
-                      const reqType: LikeBookReqType = {
-                        email: email,
-                        title: selectBookState.title!,
-                        author: selectBookState.author!,
-                        smallImageUrl: selectBookState.largeImageUrl,
-                      };
-                      handleLikeBook(reqType);
+                      // const reqType: LikeBookReqType = {
+                      //   email: email,
+                      //   title: selectBookState.title!,
+                      //   author: selectBookState.author!,
+                      //   smallImageUrl: selectBookState.largeImageUrl,
+                      // };
+                      // handleLikeBook(reqType);
                     }
                   }}
                 >
@@ -245,13 +245,13 @@ const BookDetail = () => {
                       setIsAudio(false);
                     } else {
                       const email: string = user.statusMessage.user.email;
-                      const reqType: LikeBookReqType = {
-                        email: email,
-                        title: selectBookState.title!,
-                        author: selectBookState.author!,
-                        smallImageUrl: selectBookState.largeImageUrl,
-                      };
-                      handleLikeBook(reqType);
+                      // const reqType: LikeBookReqType = {
+                      //   email: email,
+                      //   title: selectBookState.title!,
+                      //   author: selectBookState.author!,
+                      //   smallImageUrl: selectBookState.largeImageUrl,
+                      // };
+                      // handleLikeBook(reqType);
                     }
                   }}
                 >

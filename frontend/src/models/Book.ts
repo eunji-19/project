@@ -69,9 +69,31 @@ export enum BookSaleStatus {
  * 좋아하는 책 
  * email: string, title: string, author: string, smallImageUrl: string
  */
+
 export interface LikeBook {
-  email: string;
-  title: string;
-  author: string;
-  smallImageUrl: string;
+    statusMessage: StatusMessage;
+}
+
+export interface StatusMessage {
+    existingLikeBook: ExistingLikeBook;
+}
+
+export interface ExistingLikeBook {
+    email:              string;
+    title:              string;
+    author:             string;
+    coverSmallUrl:      string;
+    href:               string;
+    avatar:             string;
+    content:            string;
+    coverLargeUrl:      string;
+    publisher:          string;
+    customerReviewRank: number;
+    categoryName:       string;
+    isbn:               string;
+    priceStandard:      string;
+    _id:                string;
+    createdAt:          Date;
+    updatedAt:          Date;
+    __v:                number;
 }

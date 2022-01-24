@@ -19,11 +19,20 @@ export type SignupReqType = {
  * 좋아요시 필요한 값
  */
 export type LikeBookReqType = {
-  email: string;
+  href: string;
   title: string;
+  avatar: string;
+  content: string;
+  coverLargeUrl: string;
   author: string;
-  smallImageUrl: string;
-};
+  publisher: string;
+  customerReviewRank: number;
+  priceStandard: number;
+  coverSmallUrl: string;
+  categoryName: string;
+  isbn: string;
+  email: string;
+}
 
 /**
  * VideoKey

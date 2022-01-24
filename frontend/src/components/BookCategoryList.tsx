@@ -34,7 +34,7 @@ const BookCategoryList: React.FC<BookProps> = ({ book }) => {
   const navigate = useNavigate();
 
   const clickCategory = (data: string) => {
-    console.log("click ", data);
+    // console.log("click ", data);
     setShow(true);
   };
 

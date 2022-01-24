@@ -84,18 +84,37 @@ const getLikeBook = async (req: Request, res: Response, next: NextFunction) => {
     /**
      * 좋아요 책인지부터 확인
      */
-    const existingLikeBook = await bookService.findLikeBook(email, title);
-    if (existingLikeBook) {
-      const deleteLikeBook = await bookService.deleteLikeBook(existingLikeBook);
+    const existingBook = await bookService.findLikeBook(email, title);
+    if (existingBook) {
+      const deleteLikeBook = await bookService.deleteLikeBook(existingBook);
       console.log("After delete ", deleteLikeBook);
-      res.status(200).json({ statusMessage: "더이상 좋아하는 책이 아닙니다." });
+     res
+      .status(200)
+      .json({
+        statusMessage: {
+          existingLikeBook: {    
+            href: "",
+            title: "",
+            avatar: "",
+            content: "",
+            coverLargeUrl: "",
+            author: "",
+            publisher: "",
+            customerReviewRank: 0,
+            priceStandard: 0,
+            coverSmallUrl: "",
+            categoryName: "",
+            isbn: "",
+            email: email,
+        }
+      }});
       return;
     }
 
     /**
      * 없으면 좋아요 기능 시작
      */
-    const newLikeBook = await bookService.setLikeBook(
+    const existingLikeBook = await bookService.setLikeBook(
       href,
       title,
       avatar,
@@ -110,7 +129,7 @@ const getLikeBook = async (req: Request, res: Response, next: NextFunction) => {
       isbn,
       email
     );
-    return res.status(200).json({ statusMessage: newLikeBook });
+    return res.status(200).json({ statusMessage: {existingLikeBook:existingLikeBook} });
   } catch (err) {
     next(err);
   }
@@ -144,16 +163,34 @@ const getInitLikeBook = async (
     const existingLikeBook = await bookService.findLikeBook(email, title);
     console.log("exi ", existingLikeBook);
     if (existingLikeBook) {
+      console.log("here");
       res.status(200).json({
         statusMessage: {
-          title: existingLikeBook.title,
+          existingLikeBook,
         },
       });
       return;
     }
     return res
       .status(200)
-      .json({ statusMessage: "아직 좋아하는 책이 아닙니다." });
+      .json({
+        statusMessage: {
+          existingLikeBook: {    
+            href: "",
+            title: "",
+            avatar: "",
+            content: "",
+            coverLargeUrl: "",
+            author: "",
+            publisher: "",
+            customerReviewRank: 0,
+            priceStandard: 0,
+            coverSmallUrl: "",
+            categoryName: "",
+            isbn: "",
+            email: email,
+        }
+      }});
   } catch (err) {
     next(err);
   }

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Book } from "../../models/Book";
-import { bestSeller, recommendSeller, newSeller } from "../actions/_bookAction";
+import { Book, LikeBook } from "../../models/Book";
+import { bestSeller, recommendSeller, newSeller, doLikeBook, initLikeBook } from "../actions/_bookAction";
 
 export interface BookState {
   books: Book | null;
@@ -142,4 +142,68 @@ const BookDetailSlice = createSlice({
 
 export const { setBookDetail } = BookDetailSlice.actions;
 
-export { BookSlice, BookDetailSlice };
+/**
+ * 좋아하는 책 
+ */
+export interface LikeBookState {
+  likeBook: LikeBook | null;
+  likeBookLoading: boolean;
+  likeBookError: any | null;
+};
+
+type LikeBookPayload = {
+  likeBook: null;
+  likeBookLoading: false;
+  likeBookError: null;
+}
+
+const likeBookInitialState: LikeBookState = {
+  likeBook: null,
+  likeBookLoading: true,
+  likeBookError: null,
+};
+
+const LikeBookSlice = createSlice({
+  name: "bookLike",
+  initialState: likeBookInitialState,
+  reducers: {
+    setLikeBookState: (state: LikeBookState, action: PayloadAction<LikeBookPayload>) => {
+      state.likeBook = null;
+      state.likeBookLoading = false;
+      state.likeBookError = null;
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(initLikeBook.pending, (state, action) => {
+        state.likeBookLoading = true;
+      })
+      .addCase(initLikeBook.fulfilled, (state, action) => {
+            console.log("result ",  action.payload);
+        state.likeBook = action.payload;
+        state.likeBookLoading = false;
+        state.likeBookError = null;
+      })
+      .addCase(initLikeBook.rejected, (state, action: PayloadAction<any>) => {
+        state.likeBook = null;
+        state.likeBookLoading = false;
+        state.likeBookError = action.payload;
+      })
+      .addCase(doLikeBook.pending, (state, action) => {
+        state.likeBookLoading = true;
+      })
+      .addCase(doLikeBook.fulfilled, (state, action) => {
+        state.likeBook = action.payload;
+        state.likeBookLoading = false;
+        state.likeBookError = null;
+      })
+      .addCase(doLikeBook.rejected, (state, action: PayloadAction<any>) => {
+        state.likeBook = null;
+        state.likeBookLoading = false;
+        state.likeBookError = action.payload
+      });
+  }
+})
+
+export const { setLikeBookState } = LikeBookSlice.actions;
+export { BookSlice, BookDetailSlice, LikeBookSlice };

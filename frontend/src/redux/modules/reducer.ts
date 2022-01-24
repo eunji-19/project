@@ -6,7 +6,7 @@ import { book, likeBook } from "./book";
 import { model, videoKey } from "./brain";
 import menuIndex from "./menuIndex";
 import selectBook from "./selectBook";
-import { BookSlice, BookDetailSlice } from "./bookSlice";
+import { BookSlice, BookDetailSlice, LikeBookSlice } from "./bookSlice";
 import { ModelSlice } from "./brainSlice";
 
 const rootReducer = combineReducers({
@@ -14,6 +14,7 @@ const rootReducer = combineReducers({
   authLogin: AuthLoginSlice.reducer,
   getBook: BookSlice.reducer,
   getBookDetail: BookDetailSlice.reducer,
+  getLikeBook: LikeBookSlice.reducer,
   brainModel: ModelSlice.reducer,
   menuIndex,
   book,
