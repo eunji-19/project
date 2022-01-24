@@ -38,7 +38,7 @@ export interface AuthLogin {
 }
 
 export interface StatusMessage {
-  access_token: string;
+  access_token?: string;
   user: User;
   message: string;
 }

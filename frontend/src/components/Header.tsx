@@ -5,6 +5,8 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import { MenuIndexPayload, setMenuIndex } from "../redux/modules/menuIndex";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { logout } from "../redux/actions/authActions";
+import { authLogout } from "../redux/actions/_authActions";
+import { AuthLogin } from "../models/Auth";
 
 const NavHeader = () => {
   const menuItem: {
@@ -23,9 +25,15 @@ const NavHeader = () => {
   /**
    * Login 설정
    */
-  const { isLoggedIn, user } = useAppSelector((state) => state.auth);
+  // const { isLoggedIn, user } = useAppSelector((state) => state.auth);
+  const { isLoggedIn } = useAppSelector((state) => state.authLogin);
   const dispatch = useAppDispatch();
-
+  let user: AuthLogin | null = null;
+  if (isLoggedIn) {
+    // @ts-ignore
+    user = JSON.parse(localStorage.getItem("user"));
+  }
+  console.log("user", user?.statusMessage.user.nickname);
   // useEffect(() => {
   //   console.log("!!", isLoggedIn);
   // }, [dispatch]);
@@ -47,7 +55,8 @@ const NavHeader = () => {
   };
 
   const onClickLogout = () => {
-    dispatch(logout());
+    // dispatch(logout());
+    dispatch(authLogout());
   };
 
   return (
@@ -66,7 +75,7 @@ const NavHeader = () => {
           {isLoggedIn ? (
             <Nav>
               <Nav.Link href="/profile">
-                {user.statusMessage.user.nickname}님 프로필
+                {user!.statusMessage.user.nickname}님 프로필
               </Nav.Link>
               <Nav.Link onClick={onClickLogout}>Logout</Nav.Link>
             </Nav>

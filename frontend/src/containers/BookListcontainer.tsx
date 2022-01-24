@@ -16,19 +16,19 @@ const BookListContainer = () => {
   const bookState: BookState = useAppSelector((state) => state.book);
   const dispatch = useAppDispatch();
 
-  const fetchBookItem = () => {
-    if (title === "BestSeller") {
-      dispatch(getBestSeller());
-    } else if (title === "New") {
-      dispatch(getNewSeller());
-    } else {
-      dispatch(getRecommendSeller());
-    }
-    console.log("test");
-  };
+  // const fetchBookItem = () => {
+  //   if (title === "BestSeller") {
+  //     dispatch(getBestSeller());
+  //   } else if (title === "New") {
+  //     dispatch(getNewSeller());
+  //   } else {
+  //     dispatch(getRecommendSeller());
+  //   }
+  //   console.log("test");
+  // };
 
   useEffect(() => {
-    fetchBookItem();
+    // fetchBookItem();
   }, [title]);
 
   return (

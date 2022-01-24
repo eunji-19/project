@@ -13,7 +13,7 @@ export type SignupReqType = {
   nickname: string;
   email: string;
   password: string;
-}
+};
 
 /**
  * 좋아요시 필요한 값
@@ -23,7 +23,7 @@ export type LikeBookReqType = {
   title: string;
   author: string;
   smallImageUrl: string;
-}
+};
 
 /**
  * VideoKey
@@ -34,7 +34,7 @@ export type VideoKeyReqType = {
   model: string;
   clothes: number;
   token: string;
-}
+};
 
 /**
  * FindProject
@@ -42,9 +42,4 @@ export type VideoKeyReqType = {
 export type FindProjectReqType = {
   key: string;
   token: string;
-}
-
-export type FercherReqType = {
-  url: string;
-  reqData: FindProjectReqType;
-}
+};

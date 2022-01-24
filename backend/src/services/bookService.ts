@@ -68,36 +68,47 @@ const getBookResult = async (category: string, subUrl: string) => {
 };
 
 /**
- * 좋아하는 책인지 확인 
+ * 좋아하는 책인지 확인
  */
 const findLikeBook = async (email: string, title: string) => {
   console.log("!!!!");
   const findBook = await LikeBookModel.findOne({ title: title, email: email });
   return findBook;
-}
+};
 
 /**
  * 좋아하는 책에서 삭제!
  */
 const deleteLikeBook = async (existingLikeBook: any) => {
   const deleteBook = await LikeBookModel.findByIdAndDelete(existingLikeBook);
-  console.log('deleteBook ', deleteBook);
+  console.log("deleteBook ", deleteBook);
   return deleteBook;
-}
+};
 
 /**
  * 좋아하는 책 생성
  */
-const setLikeBook = async (email: string, title: string, author: string, smallImageUrl: string) => {
+const setLikeBook = async (
+  email: string,
+  title: string,
+  author: string,
+  smallImageUrl: string
+) => {
   const likeBook = new LikeBookModel({ email, title, author, smallImageUrl });
   return await likeBook.save();
-}
+};
 
 const findMyBook = async (email: string) => {
   console.log("email ", email);
   const myBook = await LikeBookModel.find({ email: email });
   console.log("?", myBook);
   return myBook;
-}
+};
 
-export default { getBookResult, findLikeBook, deleteLikeBook, setLikeBook, findMyBook };
+export default {
+  getBookResult,
+  findLikeBook,
+  deleteLikeBook,
+  setLikeBook,
+  findMyBook,
+};

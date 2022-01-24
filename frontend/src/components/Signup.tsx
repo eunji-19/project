@@ -1,9 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Input, Form, message } from "antd";
 import styles from "../css/Login.module.css";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
-import { signUp } from "../redux/actions/authActions";
+import { authSignup } from "../redux/actions/_authActions";
+import { Modal } from "react-bootstrap";
 
 const Signup = () => {
   const nicknameRef = useRef<Input>(null);
@@ -12,10 +13,21 @@ const Signup = () => {
 
   // antd form control
   const [form] = Form.useForm();
+
+  /**
+   * 회원가입
+   */
+  const { signupError, signupLoading, user } = useAppSelector(
+    (state) => state.authSignup
+  );
   const navigate = useNavigate();
 
-  const { axiosMessage } = useAppSelector((state) => state.message);
   const dispatch = useAppDispatch();
+
+  /**
+   * Modal 위해서 필요
+   */
+  const [show, setShow] = useState(false);
 
   // submit 할때 Form
   const onSubmitForm = async () => {
@@ -24,20 +36,41 @@ const Signup = () => {
     const password = passwordRef.current!.state.value;
 
     console.log("nickname, email, password ", nickname, email, password);
-
-    dispatch(signUp({ nickname, email, password }))
-      .then(() => {
-        navigate("/login");
-      })
-      .catch(() => {});
-    console.log("FAil.. ", axiosMessage);
-    if (axiosMessage.status === 400) {
-      message.error(axiosMessage.message.data.statusMessage);
+    dispatch(authSignup({ nickname, email, password }));
+    if (signupError) {
+      // alert(signupError.statusMessage);
+      setShow(true);
+    }
+    if (user) {
+      navigate("/login");
     }
   };
 
   return (
     <div className={styles.login_page}>
+      <Modal
+        show={show}
+        onHide={() => {
+          setShow(false);
+        }}
+        backdrop="static"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>회원가입오류</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{signupError ? signupError.statuasMessage : ""}</Modal.Body>
+        <Modal.Footer>
+          <Button
+            danger
+            type="text"
+            onClick={() => {
+              setShow(false);
+            }}
+          >
+            확인
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <div className={styles.login_box}>
         <div className={styles.illustration_wrapper}>
           <img

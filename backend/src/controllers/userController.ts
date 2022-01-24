@@ -326,9 +326,15 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
       email,
       password: hashedPassword,
     });
-    res
-      .status(200)
-      .json({ statusMessage: { createdUser, message: "회원가입 성공" } });
+    res.status(200).json({
+      statusMessage: {
+        user: {
+          email: createdUser.email,
+          nickname: createdUser.nickname,
+        },
+        message: "회원가입 성공",
+      },
+    });
   } catch (err) {
     next(err);
   }
