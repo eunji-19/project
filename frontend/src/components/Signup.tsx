@@ -5,11 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import { authSignup } from "../redux/actions/_authActions";
 import { Modal } from "react-bootstrap";
+import axios from "axios";
+import { APP_URL } from "../configure";
 
 const Signup = () => {
   const nicknameRef = useRef<Input>(null);
   const emailRef = useRef<Input>(null);
   const passwordRef = useRef<Input>(null);
+  const [error, setError] = useState("");
 
   // antd form control
   const [form] = Form.useForm();
@@ -36,14 +39,18 @@ const Signup = () => {
     const password = passwordRef.current!.state.value;
 
     console.log("nickname, email, password ", nickname, email, password);
-    dispatch(authSignup({ nickname, email, password }));
-    if (signupError) {
-      // alert(signupError.statusMessage);
-      setShow(true);
-    }
-    if (user) {
-      navigate("/login");
-    }
+    await axios
+      .post(`${APP_URL}/auth/signup`, { nickname, email, password })
+      .then((response) => {
+        console.log("HERE");
+        navigate("/login");
+      })
+      .catch((err) => {
+        if (axios.isAxiosError(err)) {
+          setShow(true);
+          setError(err.response!.data.statusMessage);
+        }
+      });
   };
 
   return (
@@ -58,7 +65,7 @@ const Signup = () => {
         <Modal.Header closeButton>
           <Modal.Title>회원가입오류</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{signupError ? signupError.statuasMessage : ""}</Modal.Body>
+        <Modal.Body>{error !== "" ? error : ""}</Modal.Body>
         <Modal.Footer>
           <Button
             danger
@@ -158,7 +165,8 @@ const Signup = () => {
               className={styles.login_form_button}
               size="large"
             >
-              Login
+              {/* {signupLoading ? <>Loading</> : <>Signup</>} */}
+              Signup
             </Button>
           </div>
         </Form>
