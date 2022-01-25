@@ -6,43 +6,43 @@ export interface MakeVideo {
 }
 
 export interface MakeVideoStatusMessage {
-    succeed?: boolean;
-    success?: boolean;
-    errorCode?: number;
-    error?: string;
-    description?: string;
-    detail?: string;
-    data?: Data;
+  succeed?: boolean;
+  success?: boolean;
+  errorCode?: number;
+  error?: string;
+  description?: string;
+  detail?: string;
+  data?: Data;
 }
 
 export interface Data {
-    key: string;
+  key: string;
 }
 
 /**
  * find Project
  */
 export interface FindProject {
-    statusMessage: FindProjectStatusMessage;
+  statusMessage: FindProjectStatusMessage;
 }
 
 export interface FindProjectStatusMessage {
-    succeed?: boolean;
-    success?: boolean;
-    errorCode?: number;
-    error?: string;
-    description?: string;
-    detail?: string;
-    data?: FindProjectData;
+  succeed?: boolean;
+  success?: boolean;
+  errorCode?: number;
+  error?: string;
+  description?: string;
+  detail?: string;
+  data?: FindProjectData;
 }
 
 export interface FindProjectData {
-    type: string;
-    model: string;
-    clothes: string;
-    duration: any;
-    language: string;
-    locale: string;
-    progress: number;
-    video?: string;
+  type: string;
+  model: string;
+  clothes: string;
+  duration: any;
+  language: string;
+  locale: string;
+  progress: number;
+  video?: string;
 }

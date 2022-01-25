@@ -9,7 +9,7 @@ interface MyBookType {
   title: string;
   email: string;
   author: string;
-  smallImageUrl: string;
+  coverLargeUrl: string;
 }
 
 const Profile = () => {
@@ -22,19 +22,9 @@ const Profile = () => {
 
   const getMyBook = async () => {
     const email = user.statusMessage.user.email;
-    console.log("email ", email);
     const result = await axios.post(`${APP_URL}/book/myBook`, { email: email });
     setMyBook(result.data.statusMessage);
     setLoading(false);
-    // setBookList();
-    // await axios
-    //   .post(`${APP_URL}/book/myBook`, { email: email })
-    //   .then((response) => {
-    //     console.log("response ", response.data.statusMessage);
-    //     const result = response.data.statusMessage;
-    //     setMyBook(result);
-    //     setLoading(false);
-    //   });
   };
 
   if (myBook.length !== 0) {
@@ -43,7 +33,7 @@ const Profile = () => {
         listData.push({
           title: myBook[i].title,
           author: myBook[i].author,
-          smallImageUrl: myBook[i].smallImageUrl,
+          coverLargeUrl: myBook[i].coverLargeUrl,
         });
       }
     } else {
@@ -51,15 +41,21 @@ const Profile = () => {
         listData.push({
           title: myBook[i].title,
           author: myBook[i].author,
-          smallImageUrl: myBook[i].smallImageUrl,
+          coverLargeUrl: myBook[i].coverLargeUrl,
         });
       }
     }
   }
 
   const likeBookUI = listData.map((item, index) => (
-    <Card key={index} style={{ width: "15rem" }}>
-      <Card.Img variant="top" src={item.smallImageUrl} />
+    <Card
+      key={index}
+      style={{ width: "15rem" }}
+      onClick={() => {
+        console.log("click");
+      }}
+    >
+      <Card.Img variant="top" src={item.coverLargeUrl} />
       <Card.Body>
         <Card.Title>{item.title}</Card.Title>
         <Card.Text>
@@ -130,7 +126,9 @@ const Profile = () => {
           </Card.Body>
         </Card>
       </div>
-      <div>{user.statusMessage.user.nickname} 님이 좋아하는 책</div>
+      <div>
+        <h5>{user.statusMessage.user.nickname} 님이 좋아하는 책</h5>
+      </div>
       {listData.length !== 0 && (
         <div style={{ display: "flex" }}>{likeBookUI}</div>
       )}

@@ -7,7 +7,9 @@ import { Button, Card, Modal } from "react-bootstrap";
 import { message, Space, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import { doLikeBook } from "../redux/actions/_bookAction";
-import { LikeBookReqType } from "../types";
+import { LikeBookReqType, VideoKeyReqType } from "../types";
+import AudioContainer from "../containers/AudioContainer";
+import { brainVideo } from "../redux/actions/_brainAction";
 
 interface SelectBookProps {
   likeBook: LikeBook;
@@ -17,6 +19,10 @@ interface SelectBookProps {
 const _SelectBook: React.FC<SelectBookProps> = ({ likeBook, model }) => {
   const { isLoggedIn, user } = useAppSelector((state) => state.authLogin);
   const bookDetail = useAppSelector((state) => state.getBookDetail);
+  const [modelInfoList, setModelInfoList] = useState<ModelElement[]>([]);
+
+  const [modelInfoLoading, setModelInfoLoading] = useState(true);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -37,9 +43,58 @@ const _SelectBook: React.FC<SelectBookProps> = ({ likeBook, model }) => {
     setInit(true);
   };
 
+  const initModel = () => {
+    if (isLoggedIn) {
+      setModelInfoList((prev) => [...prev, ...model!.statusMessage.models]);
+      setModelInfoLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    initModel();
+  }, [dispatch]);
+
   useEffect(() => {
     initItem();
   }, []);
+
+  /**
+   * 모델
+   */
+  function ModelUI() {
+    let listData: ModelInfo[] = [];
+    modelInfoList.forEach((element) => {
+      listData.push({
+        imgUrl: element.clothes[0].imgPath.replace(".png", "_new.png"),
+        name: element.label.ko,
+        language: element.language,
+        expertise: element.expertise.ko,
+        clothes: element.clothes,
+        modelId: element.id,
+      });
+    });
+    const listItems = listData.map((item) => (
+      <Card key={item.name} style={{ width: "18rem", margin: "5px" }}>
+        <Card.Img variant="top" src={item.imgUrl} />
+        <Card.Body>
+          <Card.Title>{item.name}</Card.Title>
+          <Card.Text>
+            언어 : {item.language} <br />
+            직업 : {item.expertise}
+          </Card.Text>
+          <Button
+            variant="outline-secondary"
+            onClick={() => {
+              listenAudio(item);
+            }}
+          >
+            오디오북
+          </Button>
+        </Card.Body>
+      </Card>
+    ));
+    return <div style={{ display: "flex" }}>{listItems}</div>;
+  }
 
   /**
    * 좋아하는 책 & 해당 UI
@@ -50,9 +105,7 @@ const _SelectBook: React.FC<SelectBookProps> = ({ likeBook, model }) => {
       return (
         <Button
           variant="success"
-          // variant={likeBook ? "success" : "outline-success"}
           onClick={() => {
-            console.log("Click !");
             const email = user!.statusMessage.user.email;
             const likeBookReqType: LikeBookReqType = {
               href: bookDetail.href,
@@ -80,7 +133,6 @@ const _SelectBook: React.FC<SelectBookProps> = ({ likeBook, model }) => {
       return (
         <Button
           variant="outline-dark"
-          // variant={likeBook ? "success" : "outline-success"}
           onClick={() => {
             const email = user!.statusMessage.user.email;
             const likeBookReqType: LikeBookReqType = {
@@ -112,16 +164,46 @@ const _SelectBook: React.FC<SelectBookProps> = ({ likeBook, model }) => {
 
   /**
    * 오디오북 들으러가기
+   * Modal 창 위해서 필요
    */
   const [isAudio, setIsAudio] = useState(false);
-
-  /**
-   * Modal 위해서 필요
-   * Video UI 위해서 필요
-   */
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
   const handleClose = () => setShow(false);
+
+  const [videoKeyReqType, setVideoKeyReqType] = useState({
+    language: "",
+    text: "",
+    model: "",
+    clothes: 0,
+    token: "",
+  });
+
+  const listenAudio = (item: ModelInfo) => {
+    if (item.language[0] !== "ko") {
+      setShow(true);
+      setOpen(false);
+    } else {
+      setShow(false);
+      setOpen(!open);
+      setVideoKeyReqType({
+        language: item.language[0],
+        // text: "이것은 테스트입니다. 끝냅시다",
+        text:
+          "이 책은 " +
+          bookDetail.title +
+          " 제목이며 저자는 " +
+          bookDetail.author +
+          " 입니다. 이후부터는 준비중이니 조금만 기다려주세요",
+        model: item.modelId,
+        clothes: parseInt(item.clothes[0].id),
+        token: user!.statusMessage.user.generateToken,
+      });
+      // dispatch(brainVideo(videoReqType)).then((response) => {
+      //   setOpen(!open);
+      // });
+    }
+  };
 
   return (
     <>
@@ -192,14 +274,17 @@ const _SelectBook: React.FC<SelectBookProps> = ({ likeBook, model }) => {
               <div style={{ margin: "10px", paddingTop: "20px" }}>
                 <h4>😍 모델 선택</h4>
                 <div className={styles.box}></div>
-                {/* <ModelUI /> */}
-                {/* <div style={{ display: "flex" }}>
-              <ModelUI />
-            </div> */}
+                {!modelInfoLoading && <ModelUI />}
+                {open && (
+                  <AudioContainer
+                    videoReqType={videoKeyReqType}
+                    isAudio={isAudio}
+                  />
+                )}
+
                 {/* {open && (
               <CustomVideoPlay open={open} videoKeyType={videoKeyType} />
             )} */}
-                {/* {isValid && <Alert variant="warning">준비중입니다</Alert>} */}
                 <Modal
                   show={show}
                   onHide={() => {
