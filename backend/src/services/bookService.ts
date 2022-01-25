@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { LikeBookModel, LikeBook } from "../models/likeBook";
 
 /**
  * 검색을 위한 공통 Query
@@ -66,4 +67,71 @@ const getBookResult = async (category: string, subUrl: string) => {
   return resultMap;
 };
 
-export default { getBookResult };
+/**
+ * 좋아하는 책인지 확인
+ */
+const findLikeBook = async (email: string, title: string) => {
+  console.log("!!!!");
+  const findBook = await LikeBookModel.findOne({ title: title, email: email });
+  return findBook;
+};
+
+/**
+ * 좋아하는 책에서 삭제!
+ */
+const deleteLikeBook = async (existingLikeBook: any) => {
+  const deleteBook = await LikeBookModel.findByIdAndDelete(existingLikeBook);
+  console.log("deleteBook ", deleteBook);
+  return deleteBook;
+};
+
+/**
+ * 좋아하는 책 생성
+ */
+const setLikeBook = async (
+  href: string,
+  title: string,
+  avatar: string,
+  content: string,
+  coverLargeUrl: string,
+  author: string,
+  publisher: string,
+  customerReviewRank: number,
+  priceStandard: number,
+  coverSmallUrl: string,
+  categoryName: string,
+  isbn: string,
+  email: string
+) => {
+  const likeBook = new LikeBookModel({
+    href,
+    title,
+    avatar,
+    content,
+    coverLargeUrl,
+    author,
+    publisher,
+    customerReviewRank,
+    priceStandard,
+    coverSmallUrl,
+    categoryName,
+    isbn,
+    email,
+  });
+  return await likeBook.save();
+};
+
+const findMyBook = async (email: string) => {
+  console.log("email ", email);
+  const myBook = await LikeBookModel.find({ email: email });
+  console.log("?", myBook);
+  return myBook;
+};
+
+export default {
+  getBookResult,
+  findLikeBook,
+  deleteLikeBook,
+  setLikeBook,
+  findMyBook,
+};

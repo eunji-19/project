@@ -14,12 +14,16 @@ router.get(
   authMiddleware,
   (req: AuthRequest, res: Response, next: NextFunction) => {
     const { user } = req;
+    const { access_token } = req.cookies;
 
     try {
       if (user) {
+        // res.redirect("/");
         res
           .status(200)
-          .json({ statusMessage: { user, message: "로그인성공!" } });
+          .json({
+            statusMessage: { access_token, user, message: "로그인성공!" },
+          });
       } else {
         res.status(200).json({ statusMessage: "로그인해주세요" });
       }
@@ -29,6 +33,12 @@ router.get(
   }
 );
 
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: 유저 추가 수정 삭제 조회
+ */
 router.post(
   "/login",
   async (req: Request, res: Response, next: NextFunction) => {

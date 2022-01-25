@@ -1,0 +1,900 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "React Book 페이지를 위한 API입니다",
+    "version": "1.0.0",
+    "title": "BOOK API",
+    "contact": {
+      "email": "dmswlc19@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags": [
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "Book"
+    },
+    {
+      "name": "DeepBrain"
+    }
+  ],
+  "schemes": ["http"],
+  "host": "localhost:5000",
+  "basePath": "/api",
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "로그인",
+        "description": "로그인 POST API",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/loginParams"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/statusMessage"
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "회원가입",
+        "description": "회원가입 POST API",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nickname": {
+                  "type": "string",
+                  "required": true
+                },
+                "email": {
+                  "type": "string",
+                  "required": true
+                },
+                "password": {
+                  "type": "string",
+                  "required": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/statusMessage"
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/book/best": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "베스트셀러",
+        "description": "베스트셀러 GET API",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/bookStatusMessage"
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/book/recommend": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "추천도서",
+        "description": "추천도서 GET API",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/bookStatusMessage"
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/book/new": {
+      "get": {
+        "tags": ["Book"],
+        "summary": "신규도서",
+        "description": "신규도서 GET API",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/bookStatusMessage"
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/book/like": {
+      "post": {
+        "tags": ["Book"],
+        "summary": "좋아하는 책 담기",
+        "description": "좋아하는 책 담기 post API",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "href": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "coverLargeUrl": {
+                  "type": "string"
+                },
+                "author": {
+                  "type": "string"
+                },
+                "publisher": {
+                  "type": "string"
+                },
+                "customerReviewRank": {
+                  "type": "number"
+                },
+                "priceStandard": {
+                  "type": "number"
+                },
+                "coverSmallUrl": {
+                  "type": "string"
+                },
+                "categoryName": {
+                  "type": "string"
+                },
+                "isbn": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "object",
+                  "properties": {
+                    "existingLikeBook": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "avatar": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        },
+                        "coverLargeUrl": {
+                          "type": "string"
+                        },
+                        "author": {
+                          "type": "string"
+                        },
+                        "publisher": {
+                          "type": "string"
+                        },
+                        "customerReviewRank": {
+                          "type": "number"
+                        },
+                        "priceStandard": {
+                          "type": "number"
+                        },
+                        "coverSmallUrl": {
+                          "type": "string"
+                        },
+                        "categoryName": {
+                          "type": "string"
+                        },
+                        "isbn": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/book/findLike": {
+      "post": {
+        "tags": ["Book"],
+        "summary": "좋아하는 책이 맞는지 본인 계정으로 확인",
+        "description": "좋아하는 책이 맞는지 본인 계정으로 확인 post API",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "object",
+                  "properties": {
+                    "existingLikeBook": {
+                      "type": "object",
+                      "properties": {
+                        "href": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "avatar": {
+                          "type": "string"
+                        },
+                        "content": {
+                          "type": "string"
+                        },
+                        "coverLargeUrl": {
+                          "type": "string"
+                        },
+                        "author": {
+                          "type": "string"
+                        },
+                        "publisher": {
+                          "type": "string"
+                        },
+                        "customerReviewRank": {
+                          "type": "number"
+                        },
+                        "priceStandard": {
+                          "type": "number"
+                        },
+                        "coverSmallUrl": {
+                          "type": "string"
+                        },
+                        "categoryName": {
+                          "type": "string"
+                        },
+                        "isbn": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deepbrain/modelList": {
+      "post": {
+        "tags": ["DeepBrain"],
+        "summary": "모델리스트",
+        "description": "모델리스트 POST API",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/modelMessage"
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deepbrain/makeVideo": {
+      "post": {
+        "tags": ["DeepBrain"],
+        "summary": "비디오키",
+        "description": "비디오키 POST API",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "language": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "model": {
+                  "type": "string"
+                },
+                "clothes": {
+                  "type": "number"
+                },
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/deepbrain/findProject": {
+      "post": {
+        "tags": ["DeepBrain"],
+        "summary": "비디오 가져오기",
+        "description": "비디오 가져오기 POST API",
+        "produces": ["application/json"],
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "model": {
+                          "type": "string"
+                        },
+                        "clothes": {
+                          "type": "string"
+                        },
+                        "language": {
+                          "type": "string"
+                        },
+                        "locale": {
+                          "type": "string"
+                        },
+                        "process": {
+                          "type": "string"
+                        },
+                        "video": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "statueMessage": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "loginParams": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "statusMessage": {
+      "type": "object",
+      "properties": {
+        "statusMessage": {
+          "type": "object",
+          "$ref": "#/definitions/userMessage"
+        }
+      }
+    },
+    "userMessage": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/userModel"
+        },
+        "message": {
+          "type": "string"
+        },
+        "access_token": {
+          "type": "string"
+        }
+      }
+    },
+    "userModel": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "nickname": {
+          "type": "string"
+        },
+        "generateToken": {
+          "type": "string"
+        }
+      }
+    },
+    "bookStatusMessage": {
+      "type": "object",
+      "properties": {
+        "statueMessage": {
+          "type": "object",
+          "$ref": "#/definitions/bookMessage"
+        }
+      }
+    },
+    "bookMessage": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "domestic": {
+          "type": "object",
+          "$ref": "#/definitions/domestic"
+        },
+        "foreign": {
+          "type": "object",
+          "$ref": "#/definitions/domestic"
+        }
+      }
+    },
+    "domestic": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "copyright": {
+          "type": "string"
+        },
+        "pubDate": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        },
+        "totalResults": {
+          "type": "number"
+        },
+        "startIndex": {
+          "type": "number"
+        },
+        "itemsPerPage": {
+          "type": "number"
+        },
+        "maxResults": {
+          "type": "number"
+        },
+        "queryType": {
+          "type": "string"
+        },
+        "searchCategoryId": {
+          "type": "string"
+        },
+        "returnCode": {
+          "type": "string"
+        },
+        "returnMessage": {
+          "type": "string"
+        },
+        "searchCategoryName": {
+          "type": "string"
+        },
+        "item": {
+          "type": "array",
+          "properties": {
+            "itemId": {
+              "type": "number"
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "pubDate": {
+              "type": "string"
+            },
+            "priceStandard": {
+              "type": "number"
+            },
+            "priceSales": {
+              "type": "number"
+            },
+            "discountRate": {
+              "type": "string"
+            },
+            "saleStatus": {
+              "type": "string"
+            },
+            "coverSmallUrl": {
+              "type": "string"
+            },
+            "categoryId": {
+              "type": "string"
+            },
+            "categoryName": {
+              "type": "string"
+            },
+            "publisher": {
+              "type": "string"
+            },
+            "customerReviewRank": {
+              "type": "number"
+            },
+            "author": {
+              "type": "string"
+            },
+            "isbn": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "modelMessage": {
+      "type": "object",
+      "properties": {
+        "succeed": { "type": "boolean" },
+        "models": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "object",
+                "properties": {
+                  "en": {
+                    "type": "string"
+                  },
+                  "ko": {
+                    "type": "string"
+                  },
+                  "zh": {
+                    "type": "string"
+                  }
+                }
+              },
+              "expertise": {
+                "type": "object",
+                "properties": {
+                  "en": {
+                    "type": "string"
+                  },
+                  "ko": {
+                    "type": "string"
+                  },
+                  "zh": {
+                    "type": "string"
+                  }
+                }
+              },
+              "imgPath": {
+                "type": "string"
+              },
+              "clothes": {
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "object",
+                      "properties": {
+                        "en": {
+                          "type": "string"
+                        },
+                        "ko": {
+                          "type": "string"
+                        },
+                        "zh": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "imgPath": {
+                      "type": "string"
+                    },
+                    "intro": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "language": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "gpuType": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

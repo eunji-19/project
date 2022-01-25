@@ -1,6 +1,6 @@
 import { Document, Schema, model } from "mongoose";
 import { AutoIncrementSimple } from "@typegoose/auto-increment";
-import { BrainTokenSchema } from "./brainToken";
+// import { BrainTokenSchema } from "./brainToken";
 
 export interface User {
   nickname: string;
@@ -8,8 +8,8 @@ export interface User {
   password: string;
   date?: Date;
   seq?: number;
-  access_token?: string;
-  brainToken?: any;
+  generate_token?: string;
+  // brainToken?: any;
 }
 
 const UserSchema = new Schema(
@@ -19,8 +19,8 @@ const UserSchema = new Schema(
     password: { type: String, required: true },
     date: { type: Date, required: true, default: Date.now },
     seq: { type: Number, required: true, default: 0 },
-    access_token: { type: String },
-    brainToken: [BrainTokenSchema],
+    generate_token: { type: String },
+    // brainToken: [BrainTokenSchema],
     // brainToken: {
     //   type: Schema.Types.ObjectId,
     //   ref: "BrainToken",
