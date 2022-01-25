@@ -13,7 +13,7 @@ interface MyBookType {
 }
 
 const Profile = () => {
-  const { user } = useAppSelector((state) => state.auth);
+  const { user } = useAppSelector((state) => state.authLogin);
   const dispatch = useAppDispatch();
 
   const [myBook, setMyBook] = useState<MyBookType[]>([]);
@@ -21,7 +21,7 @@ const Profile = () => {
   const listData: any[] = [];
 
   const getMyBook = async () => {
-    const email = user.statusMessage.user.email;
+    const email = user!.statusMessage.user.email;
     const result = await axios.post(`${APP_URL}/book/myBook`, { email: email });
     setMyBook(result.data.statusMessage);
     setLoading(false);
@@ -116,18 +116,18 @@ const Profile = () => {
           />
           <Card.Body>
             <Card.Title>
-              Welcome, {user.statusMessage.user.nickname}😻
+              Welcome, {user!.statusMessage.user.nickname}😻
             </Card.Title>
             <Card.Text>
-              닉네임: <span>{user.statusMessage.user.nickname}</span>
+              닉네임: <span>{user!.statusMessage.user.nickname}</span>
               <br />
-              이메일: <span>{user.statusMessage.user.email}</span>
+              이메일: <span>{user!.statusMessage.user.email}</span>
             </Card.Text>
           </Card.Body>
         </Card>
       </div>
       <div>
-        <h5>{user.statusMessage.user.nickname} 님이 좋아하는 책</h5>
+        <h5>{user!.statusMessage.user.nickname} 님이 좋아하는 책</h5>
       </div>
       {listData.length !== 0 && (
         <div style={{ display: "flex" }}>{likeBookUI}</div>

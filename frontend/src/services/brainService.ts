@@ -3,14 +3,6 @@ import { APP_URL } from "../configure";
 import { FindProjectReqType, VideoKeyReqType } from "../types";
 
 export default class BrainService {
-  public static getModelList(token: string) {
-    return axios
-      .post(`${APP_URL}/deepbrain/modelList`, { token: token })
-      .then((response) => {
-        return response.data;
-      });
-  }
-
   public static getMakeVideoKey(reqData: VideoKeyReqType) {
     return axios
       .post(`${APP_URL}/deepbrain/makeVideo`, reqData)

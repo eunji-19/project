@@ -1,15 +1,9 @@
 import { Space, Spin } from "antd";
 import React, { useEffect, useState } from "react";
-import BookDetail from "../components/BookDetail";
-import SelectBook from "../components/SelectBook";
 import _SelectBook from "../components/_SelectBook";
-import { ModelElement, ModelInfo } from "../models/brain/Model";
-import { getModelList } from "../redux/actions/brainActions";
 import { findLikeBook, initLikeBook } from "../redux/actions/_bookAction";
 import { brainModel } from "../redux/actions/_brainAction";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
-import { setLikeBookState } from "../redux/modules/bookSlice";
-import { LikeBookReqType } from "../types";
 
 const BookDetailContainer = () => {
   const { isLoggedIn, user } = useAppSelector((state) => state.authLogin);
@@ -19,39 +13,6 @@ const BookDetailContainer = () => {
   const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState(true);
-
-  // const initItem = () => {
-  //   if (isLoggedIn) {
-  //     console.log("req!! ", loading);
-  //     const email = user!.statusMessage.user.email;
-  //     const likeBookReqType: LikeBookReqType = {
-  //       href: bookDetail.href,
-  //       title: bookDetail.title,
-  //       avatar: bookDetail.avatar,
-  //       content: bookDetail.content,
-  //       coverLargeUrl: bookDetail.coverLargeUrl,
-  //       author: bookDetail.author,
-  //       publisher: bookDetail.publisher,
-  //       customerReviewRank: bookDetail.customerReviewRank,
-  //       priceStandard: bookDetail.priceStandard,
-  //       coverSmallUrl: bookDetail.coverSmallUrl,
-  //       categoryName: bookDetail.categoryName,
-  //       isbn: bookDetail.isbn,
-  //       email: email,
-  //     };
-
-  //     dispatch(initLikeBook(likeBookReqType));
-  //     console.log("req12 ", likeBook);
-  //     dispatch(brainModel(user!.statusMessage.user.generateToken));
-  //     setLoading(false);
-  //   }
-  //   setLoading(false);
-  // };
-  // console.log("req ", loading);
-
-  // useEffect(() => {
-  //   initItem();
-  // }, [dispatch]);
 
   const initItem = () => {
     if (isLoggedIn) {
@@ -98,9 +59,6 @@ const BookDetailContainer = () => {
       )}
     </>
   );
-  // return <_SelectBook />;
-  // return <SelectBook />;
-  // return <BookDetail />;
 };
 
 export default BookDetailContainer;

@@ -22,7 +22,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/profile" element={<Profile />} />
-          {/* <Route path="/book/:id" element={<SelectBook />} /> */}
           <Route path="/book/:id" element={<BookDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

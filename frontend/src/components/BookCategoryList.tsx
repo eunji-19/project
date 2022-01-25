@@ -151,23 +151,9 @@ const BookCategoryList: React.FC<BookProps> = ({ book }) => {
                   height={200}
                   alt="logo"
                   src={item.coverLargeUrl}
-                  // src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
                 />
               }
               onClick={() => {
-                // console.log("Click book", item);
-                // const selectBookPayload: SelectBookPayload = {
-                //   title: item.title,
-                //   author: item.author,
-                //   description: item.content,
-                //   price: item.priceStandard,
-                //   smallImageUrl: item.coverSmallUrl,
-                //   largeImageUrl: item.coverLargeUrl,
-                //   categoryName: item.categoryName,
-                //   isbn: item.isbn,
-                // };
-                // dispatch(setSelectBook(selectBookPayload));
-
                 dispatch(setBookDetail(item));
                 navigate(`/book/${item.title}`);
               }}
@@ -186,9 +172,7 @@ const BookCategoryList: React.FC<BookProps> = ({ book }) => {
           style={{ margin: "10px" }}
           itemLayout="vertical"
           pagination={{
-            onChange: (page) => {
-              console.log(page);
-            },
+            onChange: (page) => {},
             pageSize: 10,
           }}
           dataSource={foreignListData}
@@ -206,21 +190,9 @@ const BookCategoryList: React.FC<BookProps> = ({ book }) => {
                   height={200}
                   alt="logo"
                   src={item.coverLargeUrl}
-                  // src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
                 />
               }
               onClick={() => {
-                console.log("Click item");
-                // const selectBookPayload: SelectBookPayload = {
-                //   title: item.title,
-                //   author: item.author,
-                //   description: item.content,
-                //   price: item.priceStandard,
-                //   smallImageUrl: item.coverSmallUrl,
-                //   largeImageUrl: item.coverLargeUrl,
-                //   categoryName: item.categoryName,
-                //   isbn: item.isbn,
-                // };
                 dispatch(setBookDetail(item));
                 navigate(`/book/${item.title}`);
               }}
